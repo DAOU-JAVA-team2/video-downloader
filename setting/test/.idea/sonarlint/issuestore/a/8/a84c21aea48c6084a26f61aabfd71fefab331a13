@@ -1,0 +1,7 @@
+
+˜	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÖÚì°ÿÿÿÿÿ8Íƒ§šç1J$b08a6954-e6df-4116-a402-8d355cfb0fb7
+p
+java:S5411"(Use a primitive boolean expression here.(ÿÕ­¢ÿÿÿÿÿ8Ïƒ§šç1J$e7cd6875-8bf5-46f3-a78a-4cb77a66eb94
+˜
+java:S1450"VRemove the "request" field and declare it as a local variable in the relevant methods.(ãù?8Øƒ§šç1J$b1075c45-5b34-4e20-9003-b474464d06c0
+r	java:S106"+Replace this use of System.out by a logger.(®æÑïÿÿÿÿÿ8ëƒ§šç1J$d513fa1f-4e0e-4659-a4b8-12fe0cc21454
