@@ -23,6 +23,7 @@ public class DownloadedListPanel extends JPanel {
 
         contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(Box.createVerticalStrut(15));
 
         for (DummyDTO dto : dtos) {
             DownloadedListCell cell = new DownloadedListCell(dto);

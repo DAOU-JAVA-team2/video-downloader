@@ -35,16 +35,16 @@ public class VideoInfoCell extends JPanel {
             e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
         }
-
+        add(Box.createHorizontalStrut(20));
         add(imageLabel);
-        add(Box.createHorizontalStrut(70));
+        add(Box.createHorizontalStrut(90));
 
         // 정보
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        titleLabel = new JLabel("Title: " + dto.videoTitle);
-        viewCount = new JLabel("viewCount: " + dto.viewCount);
-        uploader = new JLabel("uploader: " + dto.uploader);
+        titleLabel = new JLabel("제목: " + dto.videoTitle);
+        viewCount = new JLabel("조회수: " + dto.viewCount);
+        uploader = new JLabel("업로더: " + dto.uploader);
 
         infoPanel.add(titleLabel);
         infoPanel.add(viewCount);

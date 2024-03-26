@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class DownloadedListCell extends JPanel {
+public class DownloadWaitingCell extends JPanel {
     private final JLabel imageLabel;
     private final JLabel titleLabel;
     private final JLabel viewCount;
@@ -15,7 +15,7 @@ public class DownloadedListCell extends JPanel {
 
     private final JButton addToDownloadButton;
 
-    public DownloadedListCell(DummyDTO dto) {
+    public DownloadWaitingCell(DummyDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         //TODO 이미지
 
@@ -33,7 +33,6 @@ public class DownloadedListCell extends JPanel {
             e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
         }
-
         add(Box.createHorizontalStrut(20));
         add(imageLabel);
         add(Box.createHorizontalStrut(150));
@@ -52,10 +51,8 @@ public class DownloadedListCell extends JPanel {
 
         // 재생 버튼
 
-        addToDownloadButton = new JButton("재생");
-//        addToDownloadButton.setPreferredSize(new Dimension(60, 30));
-        addToDownloadButton.setPreferredSize(new Dimension(100, 30));
-
+        addToDownloadButton = new JButton("삭제");
+        addToDownloadButton.setPreferredSize(new Dimension(60, 30));
         infoPanel.add(addToDownloadButton);
 
         add(infoPanel);
