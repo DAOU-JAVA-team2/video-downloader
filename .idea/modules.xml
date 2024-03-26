@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/setting/crawling/crawling.iml" filepath="$PROJECT_DIR$/setting/crawling/crawling.iml" />
+      <module fileurl="file://$PROJECT_DIR$/setting/test/test.iml" filepath="$PROJECT_DIR$/setting/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/setting/test_client/test_client.iml" filepath="$PROJECT_DIR$/setting/test_client/test_client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/video-downloader.iml" filepath="$PROJECT_DIR$/.idea/video-downloader.iml" />
+    </modules>
+  </component>
+</project>
