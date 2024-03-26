@@ -5,7 +5,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-
 public class DownloadFrame extends JFrame {
 
     public DownloadFrame() {
@@ -14,7 +13,6 @@ public class DownloadFrame extends JFrame {
         setLocationRelativeTo(null); //중앙에 창 뜨게
         JPanel CONTENTPANEL = new JPanel();
         CONTENTPANEL.setLayout(new BorderLayout());
-        CONTENTPANEL.setBackground(Color.GREEN);
         setContentPane(CONTENTPANEL);
 
         //TODO 상단 패널(검색, 버튼)
@@ -28,14 +26,12 @@ public class DownloadFrame extends JFrame {
         UPPERPANEL.add(searchPanel,BorderLayout.WEST);
         UPPERPANEL.add(buttonPanel,BorderLayout.EAST);
 
-
         //TODO 반반 가르기
         JPanel DOWNLOADPANEL = new JPanel();
         DOWNLOADPANEL.setLayout(new GridBagLayout());
         DOWNLOADPANEL.setBackground(CustomColors.SEARCH_RESULT_BACKGROUND);
 
         HalfPanel leftPanel = new HalfPanel(HalfPanel.LEFT_PANEL);
-        
         HalfPanel rightPanel = new HalfPanel(HalfPanel.RIGHT_PANEL);
 
         DOWNLOADPANEL.add(leftPanel,leftPanel.getConstraints());
