@@ -34,30 +34,35 @@ public class DownloadSuperFrame extends JFrame {
         DOWNLOADPANEL.setBackground(CustomColors.SEARCH_RESULT_BACKGROUND);
 
         HalfPanel leftPanel = new HalfPanel(HalfPanel.LEFT_PANEL);
-
-        //더미 컨트롤러에서 데이터 받아옴
         VideoSearchPanel panel = new VideoSearchPanel(DummyController.getInstance().getDtos());
         leftPanel.add(panel);
 
-
+        //TODO 오른쪽 패널
         HalfPanel rightPanel = new HalfPanel(HalfPanel.RIGHT_PANEL);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
-        JPanel testPanel = new JPanel();
-        testPanel.setLayout(new BoxLayout(testPanel,BoxLayout.Y_AXIS));
-        testPanel.setPreferredSize(new Dimension(380,265));
-        testPanel.add(new DownloadWaitingPanel(DummyController.getInstance().getDtos()));
+        //TODO 다운로드 패널
+        JPanel rightUpperPannel = new JPanel();
 
-        rightPanel.add(testPanel);
+        rightUpperPannel.setLayout(new BoxLayout(rightUpperPannel,BoxLayout.Y_AXIS));
+        rightUpperPannel.setPreferredSize(new Dimension(380,280));
+        rightUpperPannel.add(new DownloadWaitingPanel(DummyController.getInstance().getDtos()));
+
+        rightPanel.add(rightUpperPannel);
+        JPanel padding = new JPanel();
+        padding.setBackground(new Color(220, 230, 236));
+        padding.setPreferredSize(new Dimension(20,15));
+
+        rightPanel.add(padding);
 
         //TODO 받은 목록 리스트
-        JPanel testPanel2 = new JPanel();
+        JPanel rightDownPannel = new JPanel();
 
-        testPanel2.setLayout(new BoxLayout(testPanel2,BoxLayout.Y_AXIS));
-        testPanel2.setPreferredSize(new Dimension(380,225));
-        testPanel2.add(new DownloadWaitingPanel(DummyController.getInstance().getDtos()));
+        rightDownPannel.setLayout(new BoxLayout(rightDownPannel,BoxLayout.Y_AXIS));
+        rightDownPannel.setPreferredSize(new Dimension(380,280));
+        rightDownPannel.add(new DownloadedListPanel(DummyController.getInstance().getDtos()));
 
-        rightPanel.add(testPanel2);
+        rightPanel.add(rightDownPannel);
 
 
         DOWNLOADPANEL.add(leftPanel, leftPanel.getConstraints());

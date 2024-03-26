@@ -19,7 +19,7 @@ public class HalfPanel extends JPanel {
             leftPanelConstraints.fill = GridBagConstraints.BOTH;
             leftPanelConstraints.weightx = 1.0;
             leftPanelConstraints.weighty = 1.0;
-            leftPanelConstraints.insets = new Insets(0, 30, 0, 0);
+            leftPanelConstraints.insets = new Insets(0, 30, 30, 0);
             this.constraints = leftPanelConstraints;
         } else if (panelType == RIGHT_PANEL) {
             setPreferredSize(new Dimension(410, 400));
@@ -28,7 +28,7 @@ public class HalfPanel extends JPanel {
             rightPanelConstraints.fill = GridBagConstraints.BOTH;
             rightPanelConstraints.weightx = 1.0;
             rightPanelConstraints.weighty = 1.0;
-            rightPanelConstraints.insets = new Insets(0, 0, 0, 30);
+            rightPanelConstraints.insets = new Insets(0, 0, 30, 30);
             this.constraints = rightPanelConstraints;
         }
     }
