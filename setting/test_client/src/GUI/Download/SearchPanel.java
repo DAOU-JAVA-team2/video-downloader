@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SearchPanel extends JPanel {
-    private JTextField searchField;
-    private JButton searchButton;
+    private final JTextField searchField;
+    private final JButton searchButton;
 
     public SearchPanel() {
         setLayout(new FlowLayout(FlowLayout.LEFT, 30, 20));
@@ -18,6 +18,7 @@ public class SearchPanel extends JPanel {
 
         searchButton = new JButton("검색");
         searchButton.setPreferredSize(new Dimension(100, 30));
+
         searchButton.setBackground(CustomColors.BUTTON_GREEN);
         searchButton.setForeground(Color.WHITE);
 

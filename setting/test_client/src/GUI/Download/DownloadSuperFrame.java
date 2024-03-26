@@ -1,15 +1,16 @@
 package GUI.Download;
+
 import GUI.Common.CustomColors;
+import GUI.DummyController;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
-public class DownloadFrame extends JFrame {
+public class DownloadSuperFrame extends JFrame {
 
-    public DownloadFrame() {
+    public DownloadSuperFrame() {
         //TODO 메인 프레임
-        setSize(1200,800);
+        setSize(1200, 800);
         setLocationRelativeTo(null); //중앙에 창 뜨게
         JPanel CONTENTPANEL = new JPanel();
         CONTENTPANEL.setLayout(new BorderLayout());
@@ -23,8 +24,8 @@ public class DownloadFrame extends JFrame {
         JPanel searchPanel = new SearchPanel();
         JPanel buttonPanel = new ButtonPanel();
 
-        UPPERPANEL.add(searchPanel,BorderLayout.WEST);
-        UPPERPANEL.add(buttonPanel,BorderLayout.EAST);
+        UPPERPANEL.add(searchPanel, BorderLayout.WEST);
+        UPPERPANEL.add(buttonPanel, BorderLayout.EAST);
 
         //TODO 반반 가르기
         JPanel DOWNLOADPANEL = new JPanel();
@@ -32,17 +33,22 @@ public class DownloadFrame extends JFrame {
         DOWNLOADPANEL.setBackground(CustomColors.SEARCH_RESULT_BACKGROUND);
 
         HalfPanel leftPanel = new HalfPanel(HalfPanel.LEFT_PANEL);
+
+
+        //더미 컨트롤러에서 데이터 받아옴
+        VideoSearchPanel panel = new VideoSearchPanel(DummyController.getInstance().getDtos());
+        leftPanel.add(panel);
+
+
         HalfPanel rightPanel = new HalfPanel(HalfPanel.RIGHT_PANEL);
+        rightPanel.add(new DownloadWaitingPanel(DummyController.getInstance().getDtos()));
 
-        DOWNLOADPANEL.add(leftPanel,leftPanel.getConstraints());
-        DOWNLOADPANEL.add(rightPanel,rightPanel.getConstraints());
-
-
-
+        DOWNLOADPANEL.add(leftPanel, leftPanel.getConstraints());
+        DOWNLOADPANEL.add(rightPanel, rightPanel.getConstraints());
 
 
-        CONTENTPANEL.add(UPPERPANEL,BorderLayout.NORTH);
-        CONTENTPANEL.add(DOWNLOADPANEL,BorderLayout.CENTER);
+        CONTENTPANEL.add(UPPERPANEL, BorderLayout.NORTH);
+        CONTENTPANEL.add(DOWNLOADPANEL, BorderLayout.CENTER);
 
         setVisible(true);
     }

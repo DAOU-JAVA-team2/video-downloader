@@ -1,11 +1,11 @@
-package GUI.Download.ImageTest;
+package GUI.Common;
 
 public class DummyDTO {
 
-    String imageURL;
-    String videoTitle;
-    int viewCount;
-    String uploader;
+    public String imageURL;
+    public String videoTitle;
+    public int viewCount;
+    public String uploader;
 
     public DummyDTO(String imageURL, String videoTitle, int viewCount, String uploader) {
         this.imageURL = imageURL;

@@ -1,4 +1,6 @@
-package GUI.Download.ImageTest;
+package GUI.Download;
+
+import GUI.Common.DummyDTO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -6,22 +8,26 @@ import java.awt.*;
 import java.net.URL;
 
 public class VideoInfoCell extends JPanel {
-    private JLabel imageLabel;
-    private JLabel titleLabel;
-    private JLabel viewCount;
-    private JLabel uploader;
+    private final JLabel imageLabel;
+    private final JLabel titleLabel;
+    private final JLabel viewCount;
+    private final JLabel uploader;
 
-    private JButton playButton;
+    private final JButton addToDownloadButton;
 
     public VideoInfoCell(DummyDTO dto) {
-        setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         //TODO 이미지
+
         imageLabel = new JLabel();
         try {
             URL url = new URL(dto.imageURL);
             System.out.println("URL 생성 완");
             Image image = ImageIO.read(url);
-            Image scaledImage = image.getScaledInstance(200,150,Image.SCALE_SMOOTH);
+            Image scaledImage = image.getScaledInstance(270, 150, Image.SCALE_SMOOTH);
+
+
+
             System.out.println("이미지 리드 완");
             imageLabel.setIcon(new ImageIcon(scaledImage));
             System.out.println("아이콘 적용 완");
@@ -31,7 +37,7 @@ public class VideoInfoCell extends JPanel {
         }
 
         add(imageLabel);
-        add(Box.createHorizontalStrut(50));
+        add(Box.createHorizontalStrut(70));
 
         // 정보
         JPanel infoPanel = new JPanel();
@@ -46,28 +52,13 @@ public class VideoInfoCell extends JPanel {
         infoPanel.add(Box.createVerticalStrut(70)); // 수직 간격
 
         // 재생 버튼
-        playButton = new JButton("Play");
-        infoPanel.add(playButton);
+
+        addToDownloadButton = new JButton("다운 목록에 추가");
+        addToDownloadButton.setPreferredSize(new Dimension(100, 30));
+        infoPanel.add(addToDownloadButton);
 
         add(infoPanel);
-    }
-
-
-
-
-
-    public static void main(String[] args) {
-        // 예시를 위한 프레임 생성
-        JFrame frame = new JFrame("Video Info Cell Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 150);
-
-        VideoInfoCell videoCell = new VideoInfoCell(
-                new DummyDTO("https://img.youtube.com/vi/YwC0m0XaD2E/maxresdefault.jpg",
-                        "침투부",100,"침착맨"));
-        frame.add(videoCell);
-
-        frame.setVisible(true);
+//        setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
     }
 }
 
