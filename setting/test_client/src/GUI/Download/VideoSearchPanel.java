@@ -27,5 +27,8 @@ public class VideoSearchPanel extends JPanel {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         add(scrollPane, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
     }
 }

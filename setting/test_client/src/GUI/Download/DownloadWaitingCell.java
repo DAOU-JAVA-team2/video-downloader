@@ -24,7 +24,7 @@ public class DownloadWaitingCell extends JPanel {
             URL url = new URL(dto.imageURL);
             System.out.println("URL 생성 완");
             Image image = ImageIO.read(url);
-            Image scaledImage = image.getScaledInstance(130, 72, Image.SCALE_SMOOTH);
+            Image scaledImage = image.getScaledInstance(140, 80, Image.SCALE_SMOOTH);
 
             System.out.println("이미지 리드 완");
             imageLabel.setIcon(new ImageIcon(scaledImage));
@@ -47,12 +47,12 @@ public class DownloadWaitingCell extends JPanel {
         infoPanel.add(titleLabel);
         infoPanel.add(viewCount);
         infoPanel.add(uploader);
-        infoPanel.add(Box.createVerticalStrut(70)); // 수직 간격
+        infoPanel.add(Box.createVerticalStrut(30)); // 수직 간격
 
         // 재생 버튼
 
-        addToDownloadButton = new JButton("다운 목록에 추가");
-        addToDownloadButton.setPreferredSize(new Dimension(100, 30));
+        addToDownloadButton = new JButton("삭제");
+        addToDownloadButton.setPreferredSize(new Dimension(60, 30));
 
         infoPanel.add(addToDownloadButton);
 
