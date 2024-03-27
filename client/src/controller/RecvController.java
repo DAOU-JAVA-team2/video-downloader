@@ -2,10 +2,12 @@ package controller;
 
 import network.Response;
 
+import javax.swing.*;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.Objects;
 
+import static controller.ViewController.loginFrame;
 import static controller.ViewController.switcher;
 
 public class RecvController implements Runnable {
@@ -29,29 +31,80 @@ public class RecvController implements Runnable {
             try {
                 Response response = (Response) clientIn.readObject();
                 System.out.println("\nRES: " + response.toString());
-                if (Objects.equals(response.get("select"), "user/login")) {
-                    switcher();
-                }
+
                 switch (response.get("select")){
                     case "user/signUp":
+                        if (Objects.equals(response.get("msg"), "Success")){
+                            JOptionPane.showMessageDialog(loginFrame, "회원가입 성공");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(loginFrame, "회원가입 실패");
+                        }
                         break;
                     case "user/signOut":
+                        if (Objects.equals(response.get("msg"), "Success")){
+                            JOptionPane.showMessageDialog(loginFrame, "회원탈퇴 성공");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(loginFrame, "회원탈퇴 실패");
+                        }
                         break;
                     case "user/login":
+                        if (Objects.equals(response.get("msg"), "Success")){
+                            JOptionPane.showMessageDialog(loginFrame, "로그인 성공");
+                            switcher();
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(loginFrame, "로그인 실패");
+                        }
                         break;
                     case "user/logout":
+                        if (Objects.equals(response.get("msg"), "Success")){
+                            JOptionPane.showMessageDialog(loginFrame, "로그아웃 성공");
+                            switcher();
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(loginFrame, "로그인 실패");
+                        }
                         break;
                     case "video/add":
+                        if (Objects.equals(response.get("msg"), "Success")){
+
+                        }
+                        else {
+
+                        }
                         break;
                     case "video/delete":
+                        if (Objects.equals(response.get("msg"), "Success")){
+
+                        }
+                        else {
+
+                        }
                         break;
                     case "favorite/getList":
+                        if (Objects.equals(response.get("msg"), "Success")){
+
+                        }
+                        else {
+
+                        }
                         break;
                     case "favorite/add":
+                        if (Objects.equals(response.get("msg"), "Success")){
+
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(loginFrame, "다운로드 실패");
+                        }
                         break;
                     case "favorite/delete":
-                        break;
-                    case "exit":
+                        if (Objects.equals(response.get("msg"), "Success")){
+
+                        }
+                        else {
+                        }
                         break;
                     default:
                         break;
