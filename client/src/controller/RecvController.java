@@ -7,8 +7,7 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.Objects;
 
-import static controller.ViewController.loginFrame;
-import static controller.ViewController.switcher;
+import static controller.ViewController.*;
 
 public class RecvController implements Runnable {
     // setting
@@ -25,7 +24,7 @@ public class RecvController implements Runnable {
     // run
     @Override
     public void run() {
-        Boolean run_recv = true;
+        boolean run_recv = true;
         // recv logic loop
         while(run_recv) {
             try {
@@ -35,36 +34,46 @@ public class RecvController implements Runnable {
                 switch (response.get("select")){
                     case "user/signUp":
                         if (Objects.equals(response.get("msg"), "Success")){
-                            JOptionPane.showMessageDialog(loginFrame, "회원가입 성공");
+                            String msg = "회원가입 성공" ;
+                            JOptionPane.showMessageDialog(loginFrame, msg);
                         }
                         else {
-                            JOptionPane.showMessageDialog(loginFrame, "회원가입 실패");
+                            String msg = "회원가입 실패\n에러 : " + response.get("error");
+                            JOptionPane.showMessageDialog(loginFrame, msg);
                         }
                         break;
                     case "user/signOut":
                         if (Objects.equals(response.get("msg"), "Success")){
-                            JOptionPane.showMessageDialog(loginFrame, "회원탈퇴 성공");
+                            String msg = "회원탈퇴 성공" ;
+                            JOptionPane.showMessageDialog(loginFrame, msg);
                         }
                         else {
-                            JOptionPane.showMessageDialog(loginFrame, "회원탈퇴 실패");
+                            String msg = "회원탈퇴 실패" ;
+                            JOptionPane.showMessageDialog(loginFrame, msg);
                         }
                         break;
                     case "user/login":
                         if (Objects.equals(response.get("msg"), "Success")){
-                            JOptionPane.showMessageDialog(loginFrame, "로그인 성공");
+                            String msg = "로그인 성공" ;
+                            JOptionPane.showMessageDialog(loginFrame, msg);
+                            access = response.get("access");
                             switcher();
                         }
                         else {
-                            JOptionPane.showMessageDialog(loginFrame, "로그인 실패");
+                            String msg = "로그인 실패\n에러 : " + response.get("error");
+                            JOptionPane.showMessageDialog(loginFrame, msg);
                         }
                         break;
                     case "user/logout":
                         if (Objects.equals(response.get("msg"), "Success")){
-                            JOptionPane.showMessageDialog(loginFrame, "로그아웃 성공");
+                            String msg = "로그아웃 성공" ;
+                            JOptionPane.showMessageDialog(loginFrame, msg);
+                            access = null;
                             switcher();
                         }
                         else {
-                            JOptionPane.showMessageDialog(loginFrame, "로그인 실패");
+                            String msg = "로그아웃 실패" ;
+                            JOptionPane.showMessageDialog(loginFrame, msg);
                         }
                         break;
                     case "video/add":
@@ -96,7 +105,8 @@ public class RecvController implements Runnable {
 
                         }
                         else {
-                            JOptionPane.showMessageDialog(loginFrame, "다운로드 실패");
+                            String msg = "다운로드 실패" ;
+                            JOptionPane.showMessageDialog(loginFrame, msg);
                         }
                         break;
                     case "favorite/delete":
@@ -112,7 +122,6 @@ public class RecvController implements Runnable {
             }
             catch (Exception e) {
                 System.out.println("recv error");
-                e.getStackTrace();
                 break;
             }
         }
@@ -120,7 +129,7 @@ public class RecvController implements Runnable {
         try {
             socket.close();
         } catch (Exception e) {
-            e.getStackTrace();
+            System.out.println("socket close error");
         }
     }
 
