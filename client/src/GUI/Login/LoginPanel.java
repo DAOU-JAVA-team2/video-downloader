@@ -13,6 +13,7 @@ public class LoginPanel extends JPanel {
         JLabel idLabel = new JLabel("아이디");
         idLabel.setFont(idLabel.getFont().deriveFont(16f));
         idLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        idLabel.setName("idLabel");
 
         JTextField idTextField = new JTextField();
         idTextField.setPreferredSize(new Dimension(200, 30));
@@ -27,6 +28,7 @@ public class LoginPanel extends JPanel {
         JLabel passwordLabel = new JLabel("비밀번호");
         passwordLabel.setFont(passwordLabel.getFont().deriveFont(16f));
         passwordLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        passwordLabel.setName("passwordLabel");
 
         JPasswordField passwordField = new JPasswordField();
         passwordField.setPreferredSize(new Dimension(200, 30));
@@ -41,6 +43,7 @@ public class LoginPanel extends JPanel {
         JPanel buttonSet = new JPanel();
         buttonSet.setLayout(new BorderLayout());
         buttonSet.setBackground(CustomColors.MAIN_BLUE);
+        buttonSet.setName("buttonSet");
 
         JButton loginButton = new JButton("로그인");
         loginButton.setPreferredSize(new Dimension(100, 30));
@@ -48,6 +51,7 @@ public class LoginPanel extends JPanel {
 
         JButton signUpButton = new JButton("회원가입");
         signUpButton.setPreferredSize(new Dimension(100, 30));
+        signUpButton.setName("signUpButton");
 
         buttonSet.setAlignmentX(Component.LEFT_ALIGNMENT);
         buttonSet.add(loginButton, BorderLayout.WEST);
