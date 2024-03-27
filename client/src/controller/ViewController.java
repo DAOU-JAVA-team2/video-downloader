@@ -20,6 +20,7 @@ public class ViewController {
     Socket socket;
     Thread recvThread;
     Thread sendThread;
+    public static String access = null;
     public static JFrame loginFrame = null;
     public static JFrame downFrame = null;
     public static JFrame sampleFrame;
@@ -32,7 +33,6 @@ public class ViewController {
         this.socket = socket;
         clientOut = new ObjectOutputStream(socket.getOutputStream());
         /** frame setting **/
-//        downFrame = new DownloadSuperFrame();
         loginFrame = new LoginSuperFrame();
         addAuthListener();
         sampleFrame = new SampleFrame();
@@ -63,14 +63,28 @@ public class ViewController {
         }
     }
 
+    // Auth Frame의 컴포넌트에 액션 넣기
     public static void addAuthListener(){
         // all components
         JTextField idTextField = ((JTextField)ViewController.findComponentByName(loginFrame.getContentPane(), "idTextField"));
         JTextField passwordField = ((JTextField)ViewController.findComponentByName(loginFrame.getContentPane(), "passwordField"));
         JButton loginButton = ((JButton)ViewController.findComponentByName(loginFrame.getContentPane(), "loginButton"));
+        JButton signUpButton = ((JButton)ViewController.findComponentByName(loginFrame.getContentPane(), "signUpButton"));
+        // signUpButton
+        signUpButton.addActionListener(e->{
+            System.out.println("Click signUpButton");
+            try {
+                UserDTO dto = new UserDTO();
+                dto.setId(idTextField.getText());
+                dto.setPassword(passwordField.getText());
+                serverService.userSignin(dto);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         // loginButton
         loginButton.addActionListener(e->{
-            System.out.println("얄루");
+            System.out.println("Click loginButton");
             try {
                 UserDTO dto = new UserDTO();
                 dto.setId(idTextField.getText());
@@ -81,10 +95,24 @@ public class ViewController {
             }
         });
     }
+
+    // Download Frame의 컴포넌트에 액션 넣기
     public static void addDownloadListener(){
         // all components
-        // searchButton
+        JButton logOutButton = ((JButton)ViewController.findComponentByName(downFrame.getContentPane(), "logOutButton"));
         JButton searchButton = ((JButton)ViewController.findComponentByName(downFrame.getContentPane(), "searchButton"));
+        // logOutButton
+        logOutButton.addActionListener(e->{
+            System.out.println("Click logOutButton");
+            try {
+                UserDTO dto = new UserDTO();
+                dto.setAccess(access);
+                serverService.userLogout(dto);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        // searchButton
         searchButton.addActionListener(e->{
             System.out.println("얄루");
         });
