@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 
 public class YtService {
     // settings
@@ -57,7 +58,8 @@ public class YtService {
                     // 영상 제목
                     String title = (String) videoInfoObject.get("title");
                     // 조회수
-                    String viewCount = (String) videoInfoObject.get("view_count");
+                    Long viewCount = getViewCount(videoUrl);
+                    String formattedViewCount = formatViewCount(viewCount);
                     // 업로드한 사람
                     String uploader = (String) videoInfoObject.get("author_name");
                     // videoUrl에서 VIDEO_ID 추출
@@ -68,7 +70,7 @@ public class YtService {
                     // 영상 정보와 썸네일 이미지를 VideoInfo 객체로 묶음
                     YtVideoDto videoInfo = new YtVideoDto();
                     videoInfo.setTitle(title);
-                    videoInfo.setViewCount(viewCount);
+                    videoInfo.setViewCount(formattedViewCount);
                     videoInfo.setThumbnailUrl(thumbnailUrl);
                     videoInfo.setUploader(uploader);
                     videoInfo.setVideoUrl(videoUrl);
@@ -89,6 +91,22 @@ public class YtService {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+    }
+    public static long getViewCount(String youtubeUrl) throws IOException {
+        Document doc = Jsoup.connect(youtubeUrl).get();
+        // 유튜브의 조회수는 <meta> 태그에 og:description 속성으로 들어가 있음
+        Element metaTag = doc.select("meta[itemprop=interactionCount]").first();
+        if (metaTag != null) {
+            String viewCountText = metaTag.attr("content");
+            return Long.parseLong(viewCountText);
+        } else {
+            throw new IOException("조회수를 찾을 수 없습니다.");
+        }
+    }
+
+    public static String formatViewCount(long viewCount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(viewCount);
     }
 
     public String[] searchYoutubeVideos(String encodedSongName) {
@@ -149,16 +167,6 @@ public class YtService {
         return null;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new project3();
-            }
-        });
-
-
-    }
 
     private void createVideoPanel(YtVideoDto videoDto) {
         JPanel videoInfoPanel = new JPanel(new BorderLayout());

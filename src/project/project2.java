@@ -1,3 +1,6 @@
+package project;
+
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
@@ -17,6 +20,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import java.text.DecimalFormat;
 
 public class project2 extends JFrame {
 
@@ -107,7 +111,8 @@ public class project2 extends JFrame {
                     String title = (String) videoInfoObject.get("title");
 
                     // 조회수
-                    String viewCount = (String) videoInfoObject.get("view_count");
+                    Long viewCount = getViewCount(videoUrl);
+                    String formattedViewCount = formatViewCount(viewCount);
 
                     // 업로드한 사람
                     String uploader = (String) videoInfoObject.get("author_name");
@@ -119,7 +124,7 @@ public class project2 extends JFrame {
                     String thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/0.jpg";
 
                     // 영상 정보와 썸네일 이미지를 VideoInfo 객체로 묶음
-                    VideoInfo videoInfo = new VideoInfo(title, viewCount, uploader, thumbnailUrl, videoUrl);
+                    VideoInfo videoInfo = new VideoInfo(title, formattedViewCount, uploader, thumbnailUrl, videoUrl);
 
                     // VideoInfo 객체를 사용하여 영상 정보 패널 생성
                     createVideoPanel(videoInfo);
@@ -139,7 +144,22 @@ public class project2 extends JFrame {
             e.printStackTrace();
         }
     }
+    public static long getViewCount(String youtubeUrl) throws IOException {
+        Document doc = Jsoup.connect(youtubeUrl).get();
+        // 유튜브의 조회수는 <meta> 태그에 og:description 속성으로 들어가 있음
+        Element metaTag = doc.select("meta[itemprop=interactionCount]").first();
+        if (metaTag != null) {
+            String viewCountText = metaTag.attr("content");
+            return Long.parseLong(viewCountText);
+        } else {
+            throw new IOException("조회수를 찾을 수 없습니다.");
+        }
+    }
 
+    public static String formatViewCount(long viewCount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(viewCount);
+    }
     // VideoInfo 객체를 사용하여 영상 정보 패널을 생성하는 메서드
     private void createVideoPanel(VideoInfo videoInfo) {
         JPanel videoInfoPanel = new JPanel(new BorderLayout());
