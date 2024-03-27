@@ -6,8 +6,6 @@ import dto.VideoDTO;
 import network.Request;
 import network.Response;
 
-import java.net.Socket;
-
 public class VideoService {
     // settings
     private Response response;
@@ -15,7 +13,7 @@ public class VideoService {
     private final VideoDAOImpl dbUtil;
 
     // constructor
-    public VideoService(Socket socket) throws Exception {
+    public VideoService() throws Exception {
         this.dbUtil = new VideoDAOImpl();
         this.videoDTO = new VideoDTO();
         this.response = new Response();
