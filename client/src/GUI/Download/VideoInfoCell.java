@@ -1,6 +1,7 @@
 package GUI.Download;
 
-import GUI.Common.DummyDTO;
+
+import dto.VideoDTO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,12 +15,12 @@ public class VideoInfoCell extends JPanel {
     private final JLabel uploader;
     private final JButton addToDownloadButton;
 
-    public VideoInfoCell(DummyDTO dto) {
+    public VideoInfoCell(VideoDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         //TODO 이미지
         imageLabel = new JLabel();
         try {
-            URL url = new URL(dto.imageURL);
+            URL url = new URL(dto.getUrl());
             Image image = ImageIO.read(url);
             Image scaledImage = image.getScaledInstance(270, 150, Image.SCALE_SMOOTH);
             imageLabel.setIcon(new ImageIcon(scaledImage));
@@ -33,9 +34,9 @@ public class VideoInfoCell extends JPanel {
         // 정보
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        titleLabel = new JLabel("제목: " + dto.videoTitle);
-        viewCount = new JLabel("조회수: " + dto.viewCount);
-        uploader = new JLabel("업로더: " + dto.uploader);
+        titleLabel = new JLabel("제목: " + dto.getTitle());
+        viewCount = new JLabel("조회수: " + dto.getViewCount());
+        uploader = new JLabel("업로더: " + dto.getUploader());
 
         infoPanel.add(titleLabel);
         infoPanel.add(viewCount);

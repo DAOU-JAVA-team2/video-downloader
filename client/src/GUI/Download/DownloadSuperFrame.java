@@ -2,6 +2,8 @@ package GUI.Download;
 
 import GUI.Common.CustomColors;
 import GUI.DummyController;
+import controller.ViewController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -35,9 +37,10 @@ public class DownloadSuperFrame extends JFrame {
 
         HalfPanel leftPanel = new HalfPanel(HalfPanel.LEFT_PANEL);
         //검색버튼 누를 때마다 VideoSearchPanel 초기화 해줘야함
-        VideoSearchPanel panel = new VideoSearchPanel(DummyController.getInstance().getDtos());
+//        VideoSearchPanel videoSearchPanel = new VideoSearchPanel(DummyController.getInstance().getDtos());
+        VideoSearchPanel videoSearchPanel = new VideoSearchPanel(ViewController.videoSearchList);
 
-        leftPanel.add(panel);
+        leftPanel.add(videoSearchPanel);
 
         //TODO 오른쪽 패널
         HalfPanel rightPanel = new HalfPanel(HalfPanel.RIGHT_PANEL);
@@ -48,7 +51,9 @@ public class DownloadSuperFrame extends JFrame {
 
         rightUpperPannel.setLayout(new BoxLayout(rightUpperPannel, BoxLayout.Y_AXIS));
         rightUpperPannel.setPreferredSize(new Dimension(380, 280));
-        rightUpperPannel.add(new DownloadWaitingPanel(DummyController.getInstance().getDtos()));
+
+//        rightUpperPannel.add(new DownloadWaitingPanel(DummyController.getInstance().getDtos()));
+        rightUpperPannel.add(new DownloadWaitingPanel(ViewController.downloadWaitingList));
 
         JPanel padding = new JPanel();
         padding.setBackground(CustomColors.PANEL_BLUE);
@@ -62,7 +67,8 @@ public class DownloadSuperFrame extends JFrame {
 
         rightDownPannel.setLayout(new BoxLayout(rightDownPannel, BoxLayout.Y_AXIS));
         rightDownPannel.setPreferredSize(new Dimension(380, 280));
-        rightDownPannel.add(new DownloadedListPanel(DummyController.getInstance().getDtos()));
+//        rightDownPannel.add(new DownloadedListPanel(DummyController.getInstance().getDtos()));
+        rightDownPannel.add(new DownloadedListPanel(ViewController.downloadedList));
 
         rightPanel.add(rightDownPannel);
 
