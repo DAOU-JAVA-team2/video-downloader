@@ -6,6 +6,8 @@ public class DownloadCompNames {
     public static final String searchButton_u = "searchButton_u";
     public static final String extraButton_u = "extraButton_u";
     public static final String logOutButton_u = "logOutButton_u";
+
+    public static final String videoSearchPanel_l = "videoSearchPanel_l";
     //left panel
 
     //right upper panel

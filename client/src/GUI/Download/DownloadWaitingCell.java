@@ -20,7 +20,7 @@ public class DownloadWaitingCell extends JPanel {
         //TODO 이미지
         imageLabel = new JLabel();
         try {
-            URL url = new URL(dto.getUrl());
+            URL url = new URL(dto.getThumbnailUrl());
             System.out.println("URL 생성 완");
             Image image = ImageIO.read(url);
             Image scaledImage = image.getScaledInstance(180, 100, Image.SCALE_SMOOTH);

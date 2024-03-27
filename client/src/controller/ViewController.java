@@ -1,8 +1,8 @@
 package controller;
 
-import GUI.Auth.AuthSuperFrame;
 import GUI.Download.DownloadCompNames;
 import GUI.Download.DownloadSuperFrame;
+import GUI.Download.VideoSearchPanel;
 import GUI.Login.LoginSuperFrame;
 import GUI.SampleFrame;
 import dto.UserDTO;
@@ -11,12 +11,14 @@ import service.CrawlService;
 import service.ServerService;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class ViewController {
@@ -33,6 +35,10 @@ public class ViewController {
 
     public static TestYoutubeService testYoutubeService = new TestYoutubeService();
 
+    //검색용 리스트
+    //장바구니 리스트
+    //다운로드 리스트
+
     //검색 결과를 담아서 셀을 그릴 용도의 리스트
     public static ArrayList<VideoDTO> videoSearchList = new ArrayList<>();
     public static ArrayList<VideoDTO> downloadWaitingList = new ArrayList<>();
@@ -40,9 +46,7 @@ public class ViewController {
 
     // constructor
     public ViewController(Socket socket) throws Exception {
-        //검색용 리스트
-        //장바구니 리스트
-        //다운로드 리스트
+
 
 
 
@@ -107,7 +111,8 @@ public class ViewController {
         //TODO: 위 패널
         JTextField searchField = (JTextField)ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.searchField_u);
         JButton searchButton = (JButton)ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.searchButton_u);
-
+        JPanel videoSearchPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.videoSearchPanel_l);
+//        AtomicReference<JPanel> videoSearchPanel = new AtomicReference<>((JPanel) ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.videoSearchPanel_l));
         //TODO: 좌측 패널
 
         //TODO: 우 상단 패널
@@ -121,22 +126,17 @@ public class ViewController {
         });
 
         searchButton.addActionListener(e->{
-
             String songName = searchField.getText();
             videoSearchList = testYoutubeService.searchAndDisplayResults(songName);
+            ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
             System.out.println("테스트 시작");
+
+            downFrame.revalidate();
+            downFrame.repaint();
+
             for(VideoDTO dto : videoSearchList) {
                 System.out.println(dto.getTitle());
             }
-
-
-            System.out.println("버튼");
-            System.out.println(searchField.getText());
-
-
-
-
-
 
 
         });
