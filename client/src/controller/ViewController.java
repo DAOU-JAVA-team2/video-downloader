@@ -29,6 +29,13 @@ public class ViewController {
 
     // constructor
     public ViewController(Socket socket) throws Exception {
+        //검색용 리스트
+        //장바구니 리스트
+        //다운로드 리스트
+
+
+
+
         this.socket = socket;
         clientOut = new ObjectOutputStream(socket.getOutputStream());
         /** frame setting **/
@@ -80,6 +87,10 @@ public class ViewController {
                 throw new RuntimeException(ex);
             }
         });
+
+
+
+
     }
     public static void addDownloadListener(){
         // all components
@@ -89,6 +100,7 @@ public class ViewController {
             System.out.println("얄루");
         });
     }
+
 
     // 이름으로 컴포넌트 찾기 메서드
     public static Component findComponentByName(Container container, String componentName) {

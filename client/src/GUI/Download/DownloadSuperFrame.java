@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class DownloadSuperFrame extends JFrame {
 
+
     public DownloadSuperFrame() {
         //TODO 메인 프레임
         setSize(1200, 800);
@@ -33,7 +34,9 @@ public class DownloadSuperFrame extends JFrame {
         DOWNLOADPANEL.setBackground(CustomColors.SEARCH_RESULT_BACKGROUND);
 
         HalfPanel leftPanel = new HalfPanel(HalfPanel.LEFT_PANEL);
+        //검색버튼 누를 때마다 VideoSearchPanel 초기화 해줘야함
         VideoSearchPanel panel = new VideoSearchPanel(DummyController.getInstance().getDtos());
+
         leftPanel.add(panel);
 
         //TODO 오른쪽 패널

@@ -31,7 +31,6 @@ public class SampleFrame extends JFrame {
 
     // 영상 정보와 썸네일 이미지를 담는 내부 클래스
 
-
     public SampleFrame() {
         setTitle("Youtube 뮤비 다운로드");
         setSize(600, 400); // 크기 조정
@@ -82,16 +81,20 @@ public class SampleFrame extends JFrame {
     // 검색 및 결과 출력 메서드
     public void searchAndDisplayResults() {
         String songName = songNameField.getText();
+        //TODO: 초기화 로직
         resultArea.setText(""); // 이전 결과 지우기
         videoPanel.removeAll(); // 이전 영상 정보 패널 지우기
 
         try {
+            //tf String encoding 후 searchYoutubeVideos로 String 배열 받아옴
+
             String encodedSongName = URLEncoder.encode(songName, "UTF-8");
             String[] videoUrls = searchYoutubeVideos(encodedSongName);
 
             if (videoUrls != null) {
+                //각 url마다 반복
                 for (String videoUrl : videoUrls) {
-                    // 동영상 정보 가져오기
+                    // 동영상 정보 json으로 가져오기
                     String videoInfoUrl = "https://www.youtube.com/oembed?url=" + videoUrl + "&format=json";
                     Document videoInfoDoc = Jsoup.connect(videoInfoUrl).ignoreContentType(true).get();
                     String videoInfoJson = videoInfoDoc.body().text();
@@ -99,17 +102,13 @@ public class SampleFrame extends JFrame {
                     JSONObject videoInfoObject = (JSONObject) parser.parse(videoInfoJson);
                     // 영상 제목
                     String title = (String) videoInfoObject.get("title");
-
                     // 조회수
                     Long viewCount = getViewCount(videoUrl);
                     String formattedViewCount = formatViewCount(viewCount);
-
                     // 업로드한 사람
                     String uploader = (String) videoInfoObject.get("author_name");
-
                     // videoUrl에서 VIDEO_ID 추출
                     String videoId = videoUrl.substring(videoUrl.indexOf("v=") + 2);
-
                     // 썸네일 이미지 URL 조합
                     String thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/0.jpg";
 
@@ -120,6 +119,9 @@ public class SampleFrame extends JFrame {
                     videoInfo.setUploader(uploader);
                     videoInfo.setThumbnailUrl(thumbnailUrl);
                     videoInfo.setUrl(videoUrl);
+
+                    //Video DTO 배열을 리턴하도록 수정
+                    //이후 순회하면서 createVideoPanel
 
                     // VideoInfo 객체를 사용하여 영상 정보 패널 생성
                     createVideoPanel(videoInfo);
