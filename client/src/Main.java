@@ -1,4 +1,4 @@
-// client - socket Thread please
+// client - socket Thread
 
 import controller.ViewController;
 

@@ -17,6 +17,7 @@ public class LoginPanel extends JPanel {
         JTextField idTextField = new JTextField();
         idTextField.setPreferredSize(new Dimension(200, 30));
         idTextField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        idTextField.setName("idTextField");
 
         add(Box.createVerticalStrut(75));
         add(idLabel);
@@ -30,6 +31,8 @@ public class LoginPanel extends JPanel {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setPreferredSize(new Dimension(200, 30));
         passwordField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        passwordField.setName("passwordField");
+
 
         add(passwordLabel);
         add(passwordField);
@@ -41,6 +44,7 @@ public class LoginPanel extends JPanel {
 
         JButton loginButton = new JButton("로그인");
         loginButton.setPreferredSize(new Dimension(100, 30));
+        loginButton.setName("loginButton");
 
         JButton signUpButton = new JButton("회원가입");
         signUpButton.setPreferredSize(new Dimension(100, 30));

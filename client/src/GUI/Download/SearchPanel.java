@@ -21,6 +21,7 @@ public class SearchPanel extends JPanel {
 
         searchButton.setBackground(CustomColors.BUTTON_GREEN);
         searchButton.setForeground(Color.WHITE);
+        searchButton.setName("searchButton");
 
         add(searchField);
         add(searchButton);

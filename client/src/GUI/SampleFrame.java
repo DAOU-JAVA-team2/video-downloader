@@ -205,10 +205,11 @@ public class SampleFrame extends JFrame {
     private void downloadWithYoutubeDL(String videoUrl) {
         try {
             // youtube-dlp의 전체 경로 지정
-            String youtubeDLPPath = "C:\\java_project\\yt-dlp";
+            String rootDirectory = System.getProperty("user.dir");
+            String youtubeDLPPath = rootDirectory + "/yt-dlp";
             // youtube-dlp 실행 명령어와 옵션을 따로 분리하여 전달
             // 직접 URL을 사용하여 다운로드
-            String[] command = {"cmd", "/c", youtubeDLPPath + ".exe", "-o", "%(title)s.%(ext)s", videoUrl};
+            String[] command = {"cmd", "/c", youtubeDLPPath + ".exe", "-f", "bestvideo+bestaudio/best", "--merge-output-format", "mp4", "-o", "%(title)s.mp4", videoUrl};
 
             ProcessBuilder builder = new ProcessBuilder(command);
             builder.redirectErrorStream(true);

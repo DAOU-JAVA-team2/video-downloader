@@ -4,13 +4,16 @@ import GUI.Auth.AuthSuperFrame;
 import GUI.Download.DownloadSuperFrame;
 import GUI.Login.LoginSuperFrame;
 import GUI.SampleFrame;
+import dto.UserDTO;
 import service.CrawlService;
 import service.ServerService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Objects;
 
 public class ViewController {
     // settings
@@ -31,6 +34,7 @@ public class ViewController {
         /** frame setting **/
 //        downFrame = new DownloadSuperFrame();
         loginFrame = new LoginSuperFrame();
+        addAuthListener();
         sampleFrame = new SampleFrame();
         /** get service **/
         serverService = new ServerService();
@@ -47,36 +51,59 @@ public class ViewController {
     public static void switcher() {
         if(downFrame == null) {
             downFrame = new DownloadSuperFrame();
+            addDownloadListener();
             loginFrame.dispose();
             loginFrame = null;
         }
         else if(loginFrame == null) {
             loginFrame = new LoginSuperFrame();
+            addAuthListener();
             downFrame.dispose();
             downFrame = null;
         }
     }
 
-    public void addAuthListener(){
+    public static void addAuthListener(){
+        // all components
+        JTextField idTextField = ((JTextField)ViewController.findComponentByName(loginFrame.getContentPane(), "idTextField"));
+        JTextField passwordField = ((JTextField)ViewController.findComponentByName(loginFrame.getContentPane(), "passwordField"));
+        JButton loginButton = ((JButton)ViewController.findComponentByName(loginFrame.getContentPane(), "loginButton"));
+        // loginButton
+        loginButton.addActionListener(e->{
+            System.out.println("얄루");
+            try {
+                UserDTO dto = new UserDTO();
+                dto.setId(idTextField.getText());
+                dto.setPassword(passwordField.getText());
+                serverService.userLogin(dto);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
-    public void addDownloadListener(){
-
+    public static void addDownloadListener(){
+        // all components
+        // searchButton
+        JButton searchButton = ((JButton)ViewController.findComponentByName(downFrame.getContentPane(), "searchButton"));
+        searchButton.addActionListener(e->{
+            System.out.println("얄루");
+        });
     }
 
     // 이름으로 컴포넌트 찾기 메서드
-    public static Component findComponentByName(Container container, String name) {
+    public static Component findComponentByName(Container container, String componentName) {
         Component[] components = container.getComponents();
         for (Component component : components) {
+            if (Objects.equals(component.getName(), componentName)) {
+                return component; // 이름이 일치하는 컴포넌트 반환
+            }
             if (component instanceof Container) {
-                Component found = findComponentByName((Container) component, name);
-                if (found != null) {
-                    return found;
+                Component foundComponent = findComponentByName((Container) component, componentName);
+                if (foundComponent != null) {
+                    return foundComponent; // 하위 컨테이너에서 찾은 컴포넌트 반환
                 }
             }
-            if (name.equals(component.getName())) {
-                return component;
-            }
         }
-        return null;
+        return null; // 이름이 일치하는 컴포넌트가 없는 경우
     }
 }
