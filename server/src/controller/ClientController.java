@@ -6,7 +6,6 @@ import service.FavoriteService;
 import service.UserService;
 import service.VideoService;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -18,16 +17,15 @@ public class ClientController implements Runnable {
     private final UserService userService;
     private final VideoService videoService;
     private final FavoriteService favoriteService;
-    String result;
 
     // constructor
     public ClientController(Socket socket) throws Exception {
         this.socket = socket;
         this.serverOut = new ObjectOutputStream(socket.getOutputStream());
         this.serverIn = new ObjectInputStream(socket.getInputStream());
-        this.userService = new UserService(socket);
-        this.videoService = new VideoService(socket);
-        this.favoriteService = new FavoriteService(socket);
+        this.userService = new UserService();
+        this.videoService = new VideoService();
+        this.favoriteService = new FavoriteService();
     }
 
     // run
