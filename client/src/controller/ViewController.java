@@ -121,24 +121,52 @@ public class ViewController {
 
         // all components
         // searchButton
-        searchField.addActionListener(e -> {
-            System.out.println("텍스트필드");
-        });
-
-        searchButton.addActionListener(e->{
+//        searchField.addActionListener(e -> {
+//            System.out.println("텍스트필드");
+//        });
+//
+//        searchButton.addActionListener(e->{
+//
+//            String songName = searchField.getText();
+//            videoSearchList = testYoutubeService.searchAndDisplayResults(songName);
+//            ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
+//            System.out.println("테스트 시작");
+//
+//            downFrame.revalidate();
+//            downFrame.repaint();
+//
+//            for(VideoDTO dto : videoSearchList) {
+//                System.out.println(dto.getTitle());
+//            }
+//
+//
+//        });
+        searchButton.addActionListener(e -> {
             String songName = searchField.getText();
-            videoSearchList = testYoutubeService.searchAndDisplayResults(songName);
-            ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
-            System.out.println("테스트 시작");
 
-            downFrame.revalidate();
-            downFrame.repaint();
+            SwingWorker<ArrayList<VideoDTO>, Void> worker = new SwingWorker<>() {
+                @Override
+                protected ArrayList<VideoDTO> doInBackground() throws Exception {
+                    // 백그라운드에서 실행될 작업 수행
+                    return testYoutubeService.searchAndDisplayResults(songName);
+                }
 
-            for(VideoDTO dto : videoSearchList) {
-                System.out.println(dto.getTitle());
-            }
+                @Override
+                protected void done() {
+                    try {
+                        // 작업 완료 후 UI 업데이트
+                        videoSearchList = get(); // doInBackground()의 반환값 가져오기
+                        ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
+                        downFrame.revalidate();
+                        downFrame.repaint();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            };
 
-
+            // SwingWorker 실행
+            worker.execute();
         });
     }
 
