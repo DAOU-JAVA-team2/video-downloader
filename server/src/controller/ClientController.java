@@ -6,30 +6,26 @@ import service.FavoriteService;
 import service.UserService;
 import service.VideoService;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientController implements Runnable {
-    // setting
-    private Response response;
     private final Socket socket;
     private final ObjectInputStream serverIn;
     private final ObjectOutputStream serverOut;
     private final UserService userService;
     private final VideoService videoService;
     private final FavoriteService favoriteService;
-    String result;
 
     // constructor
     public ClientController(Socket socket) throws Exception {
         this.socket = socket;
         this.serverOut = new ObjectOutputStream(socket.getOutputStream());
         this.serverIn = new ObjectInputStream(socket.getInputStream());
-        this.userService = new UserService(socket);
-        this.videoService = new VideoService(socket);
-        this.favoriteService = new FavoriteService(socket);
+        this.userService = new UserService();
+        this.videoService = new VideoService();
+        this.favoriteService = new FavoriteService();
     }
 
     // run
@@ -43,7 +39,8 @@ public class ClientController implements Runnable {
                 System.out.println("\nREQ\n"+socket + request.toString());
 
                 // request parse
-                response = new Response();
+                // setting
+                Response response = new Response();
                 switch (request.get("select")){
                     case "user/signUp":
                         response = userService.userSignup(request);
@@ -84,14 +81,9 @@ public class ClientController implements Runnable {
                 serverOut.flush();
             }
             catch (Exception e) {
-                e.printStackTrace();
-                try {
-                    response.put("msg", "Failed");
-                    serverOut.writeObject(response);
-                    serverOut.flush();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                System.out.println("  client 해제 -> " + socket);
+                e.getStackTrace();
+                return;
             }
         }
     }

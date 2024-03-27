@@ -6,7 +6,7 @@ import dto.UserDTO;
 import network.Request;
 import network.Response;
 
-import java.net.Socket;
+import java.sql.SQLException;
 
 public class UserService {
     // settings
@@ -15,27 +15,34 @@ public class UserService {
     private UserDAOImpl dbUtil;
 
     // constructor
-    public UserService(Socket socket) throws Exception {
+    public UserService(){
         try{
             this.dbUtil = new UserDAOImpl();
             this.userDTO = new UserDTO();
             this.response = new Response();
         }
         catch(Exception e) {
-            e.printStackTrace();
+            System.out.println("userService Error: " + e.getMessage());
         }
     }
 
     // service methods
-    public Response userSignup(Request request) throws Exception {
+    public Response userSignup(Request request) {
+        response = new Response();
+        response.put("select", "user/signup");
+
         userDTO.setId(request.get("id"));
         userDTO.setPassword(request.get("password"));
-        userDTO.setUsername(request.get("name"));
-        boolean result = dbUtil.insertUser(userDTO);
-
-        response = new Response();
-        response.put("msg", result ? "Success" : "Failed");
-        response.put("select", "user/signup");
+        try{
+            dbUtil.insertUser(userDTO);
+            response.put("msg", "Success");
+        }
+        catch (SQLException e) {
+            response.put("msg", "Failed");
+            System.out.println(e.getSQLState());
+            String errorMessage = getErrorMessage(e.getSQLState());
+            response.put("error", errorMessage);
+        }
 
         return response;
     }
@@ -50,19 +57,30 @@ public class UserService {
 
         return response;
     }
-    public Response userLogin(Request request) throws Exception {
+    public Response userLogin(Request request) {
+        response = new Response();
+        response.put("select", "user/login");
+
         userDTO.setId(request.get("id"));
         userDTO.setPassword(request.get("password"));
-        String accessToken = dbUtil.loginUser(userDTO);
-
-        response = new Response();
-        response.put("msg", accessToken != null ? "Success" : "Failed");
-        response.put("select", "user/login");
-        response.put("access", accessToken);
+        try {
+            String accessToken = dbUtil.loginUser(userDTO);
+            response.put("msg", accessToken != null ? "Success" : "Failed");
+            response.put("access", accessToken);
+            if(accessToken == null) {
+                response.put("error", "유효하지 않은 사용자");
+            }
+        }
+        catch (SQLException e) {
+            response.put("msg", "Failed");
+            System.out.println(e.getSQLState());
+            String errorMessage = getErrorMessage(e.getSQLState());
+            response.put("error", errorMessage);
+        }
 
         return response;
     }
-    public Response userLogout(Request request) throws Exception {
+    public Response userLogout(Request request) {
         userDTO.setAccess(request.get("access"));
         boolean result = dbUtil.logoutUser(userDTO);
 
@@ -83,6 +101,24 @@ public class UserService {
         response.put("select", "user/getId");
 
         return response;
+    }
+
+    // etc
+    private String getErrorMessage(String sqlState) {
+        String errorMessage;
+        switch (sqlState) {
+            case "23000":
+                errorMessage = "이미 존재하는 값";
+                break;
+            case "22001":
+                errorMessage = "너무 긴 입력";
+                break;
+            // 다른 SQL 오류 코드에 대한 처리를 여기에 추가합니다.
+            default:
+                errorMessage = "알 수 없는 오류";
+                break;
+        }
+        return errorMessage;
     }
 }
 
