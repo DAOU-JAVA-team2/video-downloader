@@ -12,8 +12,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientController implements Runnable {
-    // setting
-    private Response response;
     private final Socket socket;
     private final ObjectInputStream serverIn;
     private final ObjectOutputStream serverOut;
@@ -43,7 +41,8 @@ public class ClientController implements Runnable {
                 System.out.println("\nREQ\n"+socket + request.toString());
 
                 // request parse
-                response = new Response();
+                // setting
+                Response response = new Response();
                 switch (request.get("select")){
                     case "user/signUp":
                         response = userService.userSignup(request);
@@ -84,14 +83,9 @@ public class ClientController implements Runnable {
                 serverOut.flush();
             }
             catch (Exception e) {
-                e.printStackTrace();
-                try {
-                    response.put("msg", "Failed");
-                    serverOut.writeObject(response);
-                    serverOut.flush();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                System.out.println("  client 해제 -> " + socket);
+                e.getStackTrace();
+                return;
             }
         }
     }

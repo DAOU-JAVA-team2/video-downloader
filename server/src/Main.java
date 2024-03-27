@@ -18,7 +18,7 @@ public class Main {
             try{
                 // recv thread
                 Socket socket = ss.accept();
-                System.out.println("  client -> " + socket);
+                System.out.println("  client 연결 -> " + socket);
                 Thread clientThread = new Thread(new ClientController(socket));
                 clientThread.start();
             }
