@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DummyController {
     private static DummyController instance;
-    private ArrayList<DummyDTO> dtos = new ArrayList<>();
+    private final ArrayList<DummyDTO> dtos = new ArrayList<>();
 
     private DummyController() {
         initDtos();

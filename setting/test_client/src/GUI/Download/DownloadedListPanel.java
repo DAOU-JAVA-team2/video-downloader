@@ -1,5 +1,6 @@
 package GUI.Download;
 
+import GUI.Common.CustomColors;
 import GUI.Common.DummyDTO;
 
 import javax.swing.*;
@@ -12,14 +13,13 @@ public class DownloadedListPanel extends JPanel {
     private final JScrollPane scrollPane;
 
     public DownloadedListPanel(ArrayList<DummyDTO> dtos) {
-//        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380, 265));
         waitingLabel = new JLabel("다운로드 보관함");
         waitingLabel.setFont(waitingLabel.getFont().deriveFont(16f));
-        waitingLabel.setForeground(new Color(70, 75, 75));
+        waitingLabel.setForeground(CustomColors.FONT_GRAY);
         waitingLabel.setOpaque(true);
-        waitingLabel.setBackground(new Color(220, 230, 236));
+        waitingLabel.setBackground(CustomColors.PANEL_BLUE);
 
         contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -38,9 +38,7 @@ public class DownloadedListPanel extends JPanel {
         JPanel buttonSet = new JPanel();
         buttonSet.setLayout(new BorderLayout());
 
-
-        add(waitingLabel,BorderLayout.NORTH);
-        add(scrollPane,BorderLayout.CENTER);
-
+        add(waitingLabel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
     }
 }

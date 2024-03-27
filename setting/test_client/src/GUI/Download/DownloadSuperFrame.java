@@ -44,26 +44,25 @@ public class DownloadSuperFrame extends JFrame {
         //TODO 다운로드 패널
         JPanel rightUpperPannel = new JPanel();
 
-        rightUpperPannel.setLayout(new BoxLayout(rightUpperPannel,BoxLayout.Y_AXIS));
-        rightUpperPannel.setPreferredSize(new Dimension(380,280));
+        rightUpperPannel.setLayout(new BoxLayout(rightUpperPannel, BoxLayout.Y_AXIS));
+        rightUpperPannel.setPreferredSize(new Dimension(380, 280));
         rightUpperPannel.add(new DownloadWaitingPanel(DummyController.getInstance().getDtos()));
 
         rightPanel.add(rightUpperPannel);
         JPanel padding = new JPanel();
-        padding.setBackground(new Color(220, 230, 236));
-        padding.setPreferredSize(new Dimension(20,15));
+        padding.setBackground(CustomColors.PANEL_BLUE);
+        padding.setPreferredSize(new Dimension(20, 15));
 
         rightPanel.add(padding);
 
         //TODO 받은 목록 리스트
         JPanel rightDownPannel = new JPanel();
 
-        rightDownPannel.setLayout(new BoxLayout(rightDownPannel,BoxLayout.Y_AXIS));
-        rightDownPannel.setPreferredSize(new Dimension(380,280));
+        rightDownPannel.setLayout(new BoxLayout(rightDownPannel, BoxLayout.Y_AXIS));
+        rightDownPannel.setPreferredSize(new Dimension(380, 280));
         rightDownPannel.add(new DownloadedListPanel(DummyController.getInstance().getDtos()));
 
         rightPanel.add(rightDownPannel);
-
 
         DOWNLOADPANEL.add(leftPanel, leftPanel.getConstraints());
         DOWNLOADPANEL.add(rightPanel, rightPanel.getConstraints());

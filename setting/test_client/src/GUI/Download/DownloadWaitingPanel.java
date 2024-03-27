@@ -1,5 +1,6 @@
 package GUI.Download;
 
+import GUI.Common.CustomColors;
 import GUI.Common.DummyDTO;
 
 import javax.swing.*;
@@ -14,7 +15,6 @@ public class DownloadWaitingPanel extends JPanel {
     private final JButton downloadButton;
 
     public DownloadWaitingPanel(ArrayList<DummyDTO> dtos) {
-//        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380, 265));
 
@@ -22,7 +22,7 @@ public class DownloadWaitingPanel extends JPanel {
         waitingLabel.setFont(waitingLabel.getFont().deriveFont(16f));
         waitingLabel.setForeground(new Color(70, 75, 75));
         waitingLabel.setOpaque(true);
-        waitingLabel.setBackground(new Color(220, 230, 236));
+        waitingLabel.setBackground(CustomColors.PANEL_BLUE);
 
         contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -42,18 +42,17 @@ public class DownloadWaitingPanel extends JPanel {
 
         progressBar = new JProgressBar();
         progressBar.setStringPainted(true);
-        progressBar.setForeground(new Color(136, 222, 91, 255));
+        progressBar.setForeground(CustomColors.PROGRESS_GREEN);
 
         downloadButton = new JButton("다운로드 시작");
-        buttonSet.add(progressBar,BorderLayout.NORTH);
-        buttonSet.add(downloadButton,BorderLayout.SOUTH);
+        buttonSet.add(progressBar, BorderLayout.NORTH);
+        buttonSet.add(downloadButton, BorderLayout.SOUTH);
         downloadButton.addActionListener(e -> startDownload());
 
-        add(waitingLabel,BorderLayout.NORTH);
-        add(scrollPane,BorderLayout.CENTER);
-        add(buttonSet,BorderLayout.SOUTH);
+        add(waitingLabel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+        add(buttonSet, BorderLayout.SOUTH);
     }
-
 
     private void startDownload() {
         SwingWorker<Void, Integer> worker = new SwingWorker<>() {

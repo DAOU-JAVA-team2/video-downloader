@@ -12,13 +12,11 @@ public class DownloadWaitingCell extends JPanel {
     private final JLabel titleLabel;
     private final JLabel viewCount;
     private final JLabel uploader;
-
     private final JButton addToDownloadButton;
 
     public DownloadWaitingCell(DummyDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         //TODO 이미지
-
         imageLabel = new JLabel();
         try {
             URL url = new URL(dto.imageURL);
@@ -36,7 +34,6 @@ public class DownloadWaitingCell extends JPanel {
         add(Box.createHorizontalStrut(20));
         add(imageLabel);
         add(Box.createHorizontalStrut(150));
-
         // 정보
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
@@ -50,12 +47,10 @@ public class DownloadWaitingCell extends JPanel {
         infoPanel.add(Box.createVerticalStrut(20)); // 수직 간격
 
         // 재생 버튼
-
         addToDownloadButton = new JButton("삭제");
         addToDownloadButton.setPreferredSize(new Dimension(60, 30));
         infoPanel.add(addToDownloadButton);
 
         add(infoPanel);
-//        setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
     }
 }

@@ -1,5 +1,7 @@
 package GUI.Download;
 
+import GUI.Common.CustomColors;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,10 +13,10 @@ public class HalfPanel extends JPanel {
 
     public HalfPanel(int panelType) {
         setLayout(new GridBagLayout());
+        setBackground(CustomColors.PANEL_BLUE);
 
         if (panelType == LEFT_PANEL) {
             setPreferredSize(new Dimension(550, 400));
-            setBackground(new Color(220, 230, 236));
             GridBagConstraints leftPanelConstraints = new GridBagConstraints();
             leftPanelConstraints.fill = GridBagConstraints.BOTH;
             leftPanelConstraints.weightx = 1.0;
@@ -23,7 +25,6 @@ public class HalfPanel extends JPanel {
             this.constraints = leftPanelConstraints;
         } else if (panelType == RIGHT_PANEL) {
             setPreferredSize(new Dimension(410, 400));
-            setBackground(new Color(222, 222, 222));
             GridBagConstraints rightPanelConstraints = new GridBagConstraints();
             rightPanelConstraints.fill = GridBagConstraints.BOTH;
             rightPanelConstraints.weightx = 1.0;

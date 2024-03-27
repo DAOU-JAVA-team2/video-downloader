@@ -28,7 +28,7 @@ public class VideoSearchPanel extends JPanel {
 
         add(scrollPane, BorderLayout.CENTER);
 
-        revalidate();
-        repaint();
+//        revalidate();
+//        repaint();
     }
 }
