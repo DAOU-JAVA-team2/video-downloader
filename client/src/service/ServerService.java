@@ -58,6 +58,7 @@ public class ServerService {
         // add data
         request.put("title", dto.getTitle());
         request.put("url", dto.getUrl());
+        request.put("access", access);
         // return
         clientOut.writeObject(request);
         clientOut.flush();
@@ -96,12 +97,11 @@ public class ServerService {
         clientOut.flush();
     }
 
-    public void favoriteDelete(UserDTO uDto, VideoDTO vDto) throws IOException {
+    public void favoriteDelete(VideoDTO vDto) throws IOException {
         Request request = new Request();
         request.put("select", "favorite/delete");
         // add data
-        request.put("access", uDto.getAccess());
-        request.put("userId", String.valueOf(uDto.getUser_id()));
+        request.put("access", access);
         request.put("videoId", String.valueOf(vDto.getVideo_id()));
         // return
         clientOut.writeObject(request);

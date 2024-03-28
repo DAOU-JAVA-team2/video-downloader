@@ -52,10 +52,10 @@ public class SendTest implements Runnable{
                     serverService.videoDelete(new VideoDTO());
                 }
                 else if(select == 7) {
-                    serverService.favoriteAdd(new UserDTO(), new VideoDTO());
+                    serverService.favoriteAdd(new VideoDTO());
                 }
                 else if(select == 8) {
-                    serverService.favoriteDelete(new UserDTO(), new VideoDTO());
+                    serverService.favoriteDelete(new VideoDTO());
                 }
                 else if(select == 9) {
                     serverService.favoriteGetList(new UserDTO());
