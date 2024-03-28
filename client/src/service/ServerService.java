@@ -6,6 +6,7 @@ import network.Request;
 
 import java.io.IOException;
 
+import static controller.ViewController.access;
 import static controller.ViewController.clientOut;
 
 public class ServerService {
@@ -75,7 +76,7 @@ public class ServerService {
 
     public void favoriteGetList(UserDTO dto) throws IOException {
         Request request = new Request();
-        request.put("select", "video/getList");
+        request.put("select", "favorite/getList");
         // add data
         request.put("access", dto.getAccess());
         request.put("userId", String.valueOf(dto.getUser_id()));
@@ -84,12 +85,11 @@ public class ServerService {
         clientOut.flush();
     }
 
-    public void favoriteAdd(UserDTO uDto, VideoDTO vDto) throws IOException {
+    public void favoriteAdd(VideoDTO vDto) throws IOException {
         Request request = new Request();
-        request.put("select", "video/add");
+        request.put("select", "favorite/add");
         // add data
-        request.put("access", uDto.getAccess());
-        request.put("userId", String.valueOf(uDto.getUser_id()));
+        request.put("access", access);
         request.put("videoId", String.valueOf(vDto.getVideo_id()));
         // return
         clientOut.writeObject(request);
@@ -98,7 +98,7 @@ public class ServerService {
 
     public void favoriteDelete(UserDTO uDto, VideoDTO vDto) throws IOException {
         Request request = new Request();
-        request.put("select", "video/delete");
+        request.put("select", "favorite/delete");
         // add data
         request.put("access", uDto.getAccess());
         request.put("userId", String.valueOf(uDto.getUser_id()));
