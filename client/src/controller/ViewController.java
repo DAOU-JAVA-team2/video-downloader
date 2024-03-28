@@ -34,6 +34,7 @@ public class ViewController {
     public static CrawlService crawlService;
 
     public static TestYoutubeService testYoutubeService = new TestYoutubeService();
+    public static TestYoutubeService2 testYoutubeService2 = new TestYoutubeService2();
 
     //검색용 리스트
     //장바구니 리스트
@@ -148,7 +149,8 @@ public class ViewController {
                 @Override
                 protected ArrayList<VideoDTO> doInBackground() throws Exception {
                     // 백그라운드에서 실행될 작업 수행
-                    return testYoutubeService.searchAndDisplayResults(songName);
+//                    return testYoutubeService.searchAndDisplayResults(songName);
+                    return testYoutubeService2.searchYoutubeVideos(songName);
                 }
 
                 @Override

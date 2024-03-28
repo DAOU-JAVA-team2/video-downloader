@@ -32,8 +32,6 @@ public class VideoSearchPanel extends JPanel {
         scrollPane.setBackground(Color.BLUE);
 
         add(scrollPane, BorderLayout.CENTER);
-
-
     }
 
     public void updatePanel(ArrayList<VideoDTO> dtos) {
@@ -48,5 +46,11 @@ public class VideoSearchPanel extends JPanel {
 
         contentPane.revalidate(); // 패널을 다시 그리기 위해 호출
         contentPane.repaint();
+
+        //스크롤바 최상단 재설정
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+            verticalScrollBar.setValue(0);
+        });
     }
 }
