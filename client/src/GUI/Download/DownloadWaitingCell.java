@@ -2,10 +2,12 @@ package GUI.Download;
 
 
 import GUI.Common.CustomColors;
+import controller.ViewController;
 import dto.VideoDTO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.net.URL;
 
@@ -15,7 +17,7 @@ public class DownloadWaitingCell extends JPanel {
 
     private final JLabel viewCount;
     private final JLabel uploader;
-    private final JButton addToDownloadButton;
+    private final JButton waitingDeleteButton;
 
     public DownloadWaitingCell(VideoDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -58,9 +60,15 @@ public class DownloadWaitingCell extends JPanel {
         infoPanel.add(uploader);
         infoPanel.add(Box.createVerticalStrut(10)); // 수직 간격
 
-        addToDownloadButton = new JButton("삭제");
-        addToDownloadButton.setPreferredSize(new Dimension(60, 30));
-        infoPanel.add(addToDownloadButton);
+        waitingDeleteButton = new JButton("삭제");
+        waitingDeleteButton.setPreferredSize(new Dimension(60, 30));
+        infoPanel.add(waitingDeleteButton);
+
+        waitingDeleteButton.addActionListener(e -> {
+            ViewController.downloadWaitingList.remove(dto);
+            System.out.println("dto가 제거되었습니다");
+            ViewController.updateDownloadWaitingPanel();
+        });
 
         add(infoPanel);
     }
