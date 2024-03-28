@@ -25,9 +25,9 @@ public class DatabaseUtil {
 
     // db basic functions
     public void connect() throws Exception {
-        String url = "jdbc:mariadb://localhost:3306/java_pjt";
-        String id = "root";
-        String pass = "1111";
+        String url = System.getenv("DB_URL");
+        String id = System.getenv("DB_USER");
+        String pass = System.getenv("DB_PASS");
         conn = DriverManager.getConnection(url,id,pass);
     }
     public void statement() throws Exception{
