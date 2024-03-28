@@ -166,7 +166,7 @@ public class ViewController {
             // SwingWorker 실행
             worker.execute();
          });
-       }
+
 
         JButton logOutButton = ((JButton)ViewController.findComponentByName(downFrame.getContentPane(), "logOutButton_u"));
 
