@@ -1,7 +1,6 @@
 package GUI.Download;
 
 import GUI.Common.CustomColors;
-import GUI.DummyController;
 import controller.ViewController;
 
 import javax.swing.*;

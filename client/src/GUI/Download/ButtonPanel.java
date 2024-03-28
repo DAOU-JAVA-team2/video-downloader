@@ -18,6 +18,7 @@ public class ButtonPanel extends JPanel {
         extraButton.setForeground(Color.WHITE);
         extraButton.setPreferredSize(new Dimension(100, 30));
         extraButton.setName("extraButton_u");
+        extraButton.setVisible(false);
 
         logOutButton = new JButton("로그 아웃");
         logOutButton.setBackground(Color.gray);

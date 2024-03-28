@@ -1,5 +1,6 @@
 package GUI.Download;
 
+import GUI.Common.CompNames;
 import GUI.Common.CustomColors;
 
 import javax.swing.*;
@@ -15,14 +16,14 @@ public class SearchPanel extends JPanel {
 
         searchField = new JTextField(50);
         searchField.setPreferredSize(new Dimension(300, 30));
-        searchField.setName("searchField_u");
+        searchField.setName(CompNames.searchField_u);
 
         searchButton = new JButton("검색");
         searchButton.setPreferredSize(new Dimension(100, 30));
 
         searchButton.setBackground(CustomColors.BUTTON_GREEN);
         searchButton.setForeground(Color.WHITE);
-        searchButton.setName("searchButton_u");
+        searchButton.setName(CompNames.searchButton_u);
 
         add(searchField);
         add(searchButton);

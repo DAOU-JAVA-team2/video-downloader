@@ -7,7 +7,6 @@ import dto.VideoDTO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
 import java.net.URL;
 
@@ -20,7 +19,7 @@ public class DownloadWaitingCell extends JPanel {
 
     public DownloadWaitingCell(VideoDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setPreferredSize(new Dimension(200,120));
+        setPreferredSize(new Dimension(200, 120));
         //TODO 이미지
         imageLabel = new JLabel();
 
@@ -48,7 +47,9 @@ public class DownloadWaitingCell extends JPanel {
         titleArea.setEditable(false);
         titleArea.setAlignmentX(Component.LEFT_ALIGNMENT);
 //        titleArea.setFont(titleArea.getFont().deriveFont(10f));
-        titleArea.setFont(new Font("맑은 고딕",Font.BOLD,12));
+        titleArea.setFont(new Font(titleArea.getFont().getName(), Font.BOLD, 12));
+
+//        titleArea.setFont(new Font("맑은 고딕",Font.BOLD,12));
 
 
         viewCount = new JLabel("조회수: " + dto.getViewCount());
@@ -71,7 +72,7 @@ public class DownloadWaitingCell extends JPanel {
 
         waitingDeleteButton.addActionListener(e -> {
             ViewController.downloadWaitingList.remove(dto);
-            System.out.println("dto가 제거되었습니다");
+//            System.out.println("dto가 제거되었습니다");
             ViewController.updateDownloadWaitingPanel();
         });
 

@@ -1,9 +1,10 @@
 package GUI.Download;
 
+import GUI.Common.CompNames;
 import GUI.Common.CustomColors;
-import controller.TestYoutubeService2;
+import controller.ViewController;
 import dto.VideoDTO;
-
+import service.CrawlService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class DownloadWaitingPanel extends JPanel {
     public DownloadWaitingPanel(LinkedList<VideoDTO> dtos) {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380, 265));
-        setName(DownloadCompNames.downloadWaitingPanel_r);
+        setName(CompNames.downloadWaitingPanel_r);
 
         waitingLabel = new JLabel("다운로드 대기목록");
         waitingLabel.setFont(waitingLabel.getFont().deriveFont(16f));
@@ -32,11 +33,9 @@ public class DownloadWaitingPanel extends JPanel {
         contentPane.add(Box.createVerticalGlue());
         contentPane.add(Box.createVerticalStrut(15));
 
-
         for (VideoDTO dto : dtos) {
             DownloadWaitingCell cell = new DownloadWaitingCell(dto);
             contentPane.add(cell);
-            // 셀간 간격
             contentPane.add(Box.createVerticalStrut(15));
         }
 
@@ -50,13 +49,15 @@ public class DownloadWaitingPanel extends JPanel {
         progressBar.setStringPainted(true);
         progressBar.setForeground(CustomColors.PROGRESS_GREEN);
         progressBar.setName("progressbar_r");
+
         downloadButton = new JButton("다운로드 시작");
+        downloadButton.setName(CompNames.downloadButton_r);
+        downloadButton.addActionListener(
+                e -> progressbarUpdate()
+        );
+
         buttonSet.add(progressBar, BorderLayout.NORTH);
         buttonSet.add(downloadButton, BorderLayout.SOUTH);
-
-        downloadButton.addActionListener(e -> progressbarUpdate());
-
-        downloadButton.setName(DownloadCompNames.downloadButton_r);
 
         add(waitingLabel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
@@ -64,32 +65,30 @@ public class DownloadWaitingPanel extends JPanel {
     }
 
     public void updatePanel(LinkedList<VideoDTO> dtos) {
-        contentPane.removeAll(); // 이전에 추가된 모든 컴포넌트 제거
-        System.out.println(" dtos의 길이는 다음과 같습니다: "  +dtos.size());
+        contentPane.removeAll();
+//        System.out.println(" dtos의 길이는 다음과 같습니다: "  +dtos.size());
         for (VideoDTO dto : dtos) {
             if (dtos.size() == 1) {
-                System.out.println("셀이 하나인 경우 시작합니다.");
+//                System.out.println("셀이 하나인 경우 시작합니다.");
                 DownloadWaitingCell cell = new DownloadWaitingCell(dto);
                 contentPane.add(cell);
                 JPanel dummy = new JPanel();
-                System.out.println("더미 패널이 생겼습니다.");
-                dummy.setPreferredSize(new Dimension(200,140));
+//                System.out.println("더미 패널이 생겼습니다.");
+                dummy.setPreferredSize(new Dimension(200, 140));
                 dummy.setOpaque(true);
 //                dummy.setBackground(Color.black);
                 contentPane.add(dummy);
-                System.out.println("더미 패널이 추가되었습니다.");
-            }else{
-                System.out.println("셀 업데이트를 시작합니다.");
+//                System.out.println("더미 패널이 추가되었습니다.");
+            } else {
+//                System.out.println("셀 업데이트를 시작합니다.");
                 DownloadWaitingCell cell = new DownloadWaitingCell(dto);
                 contentPane.add(cell);
                 // 셀간 간격
                 contentPane.add(Box.createVerticalStrut(15));
             }
         }
-
-        contentPane.revalidate(); // 패널을 다시 그리기 위해 호출
+        contentPane.revalidate();
         contentPane.repaint();
-
         //스크롤바 최상단 재설정
 //        SwingUtilities.invokeLater(() -> {
 //            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
@@ -133,11 +132,11 @@ public class DownloadWaitingPanel extends JPanel {
     private void progressbarUpdate() {
         SwingUtilities.invokeLater(() -> {
             progressBar.setValue(0);
-
             Thread workerThread = new Thread(() -> {
-                while (progressBar.getValue() < 100) {
-                    int progress = TestYoutubeService2.getDownloadProgress();
-                    System.out.println("진행도::::::" + progress);
+                int buffer = 0;
+
+                while (!ViewController.downloadWaitingList.isEmpty()) {
+                    int progress = CrawlService.getDownloadProgress();
                     progressBar.setValue(progress);
 
                     try {

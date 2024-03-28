@@ -1,6 +1,9 @@
 package GUI.Download;
+
+import GUI.Common.CompNames;
 import GUI.Common.CustomColors;
 import dto.VideoDTO;
+import service.CrawlService;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,11 +16,14 @@ public class DownloadedListCell extends JPanel {
     private final JLabel viewCount;
     private final JLabel uploader;
     private final JButton playButton;
+    private final VideoDTO dto;
 
     public DownloadedListCell(VideoDTO dto) {
+        this.dto = dto;
+        setName(CompNames.downloadedListCell_r);
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setPreferredSize(new Dimension(200,120));
-        //TODO 이미지
+        setPreferredSize(new Dimension(200, 120));
+
         imageLabel = new JLabel();
 
         try {
@@ -33,7 +39,7 @@ public class DownloadedListCell extends JPanel {
         add(Box.createHorizontalStrut(20));
         add(imageLabel);
         add(Box.createHorizontalStrut(150));
-        // 정보
+
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
@@ -43,8 +49,7 @@ public class DownloadedListCell extends JPanel {
         titleArea.setWrapStyleWord(true);
         titleArea.setEditable(false);
         titleArea.setAlignmentX(Component.LEFT_ALIGNMENT);
-//        titleArea.setFont(titleArea.getFont().deriveFont(10f));
-        titleArea.setFont(new Font("맑은 고딕",Font.BOLD,10));
+        titleArea.setFont(new Font(titleArea.getFont().getName(), Font.BOLD, 12));
 
         viewCount = new JLabel("조회수: " + dto.getViewCount());
         viewCount.setFont(viewCount.getFont().deriveFont(10f));
@@ -60,11 +65,18 @@ public class DownloadedListCell extends JPanel {
         infoPanel.add(uploader);
         infoPanel.add(Box.createVerticalStrut(20)); // 수직 간격
 
-//         재생 버튼
         playButton = new JButton("재생");
         playButton.setPreferredSize(new Dimension(100, 30));
-        playButton.setName(DownloadCompNames.playButton_r);
+        playButton.setName(CompNames.playButton_r);
+        playButton.addActionListener(e -> {
+            CrawlService.playDownloadedVideo(dto);
+        });
+
         infoPanel.add(playButton);
         add(infoPanel);
+    }
+
+    public VideoDTO getDto() {
+        return this.dto;
     }
 }
