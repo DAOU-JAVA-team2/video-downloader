@@ -1,6 +1,7 @@
 package GUI.Download;
 
 
+import GUI.Common.CustomColors;
 import dto.VideoDTO;
 
 import javax.imageio.ImageIO;
@@ -40,8 +41,7 @@ public class DownloadWaitingCell extends JPanel {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
         titleArea = new JTextArea(dto.getTitle());
-        titleArea.setBackground(new Color(238,238,238));
-//        titleArea.setBackground(Color.green);
+        titleArea.setBackground(CustomColors.DEFAULT_GRAY);
         titleArea.setLineWrap(true);
         titleArea.setWrapStyleWord(true);
         titleArea.setEditable(false);

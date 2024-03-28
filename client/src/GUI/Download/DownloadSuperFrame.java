@@ -11,6 +11,8 @@ public class DownloadSuperFrame extends JFrame {
 
 
     public DownloadSuperFrame() {
+        setTitle("DAOU LOADER");
+
         //TODO 메인 프레임
         setSize(1200, 800);
         setLocationRelativeTo(null); //중앙에 창 뜨게

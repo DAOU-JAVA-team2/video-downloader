@@ -73,6 +73,11 @@ public class ViewController {
         if(downFrame == null) {
             downFrame = new DownloadSuperFrame();
             addDownloadListener();
+
+            JPanel videoSearchPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.videoSearchPanel_l);
+            ArrayList<VideoDTO> initData = testYoutubeService2.searchYoutubeVideos("춘식이");
+            ((VideoSearchPanel) videoSearchPanel).updatePanel(initData);
+
             loginFrame.dispose();
             loginFrame = null;
         }

@@ -8,6 +8,7 @@ import java.awt.*;
 public class LoginSuperFrame extends JFrame {
 
     public LoginSuperFrame() {
+        setTitle("DAOU LOADER");
         setSize(1200, 800);
         setLocationRelativeTo(null);
         setResizable(false);
