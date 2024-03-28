@@ -17,7 +17,7 @@ public class UserDAOImpl extends DatabaseUtil implements UserDAO{
 
     // constructor
     public UserDAOImpl() throws Exception {
-        pStmtInsert = conn.prepareStatement("INSERT into User (id, password, name) values (?, ?, ?)");
+        pStmtInsert = conn.prepareStatement("INSERT into User (id, password) values (?, ?)");
         pStmtSelect = conn.prepareStatement("SELECT * from User WHERE access=?");
         pStmtDelete = conn.prepareStatement("DELETE FROM User WHERE id=? and password=?");
     }
@@ -25,16 +25,15 @@ public class UserDAOImpl extends DatabaseUtil implements UserDAO{
     // user Dao
     @Override
     public Boolean insertUser(UserDTO dto) throws SQLException {
+        try{
         pStmtInsert.setString(1, dto.getId());
         pStmtInsert.setString(2, dto.getPassword());
-        pStmtInsert.setString(3, dto.getUsername());
-        try{
             pStmtInsert.executeQuery();
             return true;
         }
         catch (SQLException e){
             e.getStackTrace();
-            return false;
+            throw e;
         }
     }
 
@@ -105,6 +104,7 @@ public class UserDAOImpl extends DatabaseUtil implements UserDAO{
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         }
         return null;
     }
@@ -120,7 +120,6 @@ public class UserDAOImpl extends DatabaseUtil implements UserDAO{
         }
         catch (SQLException e) {
             e.getStackTrace();
-
             return false;
         }
     }

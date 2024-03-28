@@ -5,7 +5,6 @@ import dto.FavoriteDTO;
 import network.Request;
 import network.Response;
 
-import java.net.Socket;
 import java.util.List;
 
 public class FavoriteService {
@@ -16,10 +15,10 @@ public class FavoriteService {
     private final UserService userService;
 
     // constructor
-    public FavoriteService(Socket socket) throws Exception {
+    public FavoriteService() throws Exception {
         this.favoriteDTO = new FavoriteDTO();
         this.dbUtil = new FavoriteDAOImpl();
-        this.userService = new UserService(socket);
+        this.userService = new UserService();
     }
 
     // service methods

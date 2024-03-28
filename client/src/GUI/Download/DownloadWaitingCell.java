@@ -21,15 +21,12 @@ public class DownloadWaitingCell extends JPanel {
         imageLabel = new JLabel();
         try {
             URL url = new URL(dto.getThumbnailUrl());
-            System.out.println("URL 생성 완");
+
             Image image = ImageIO.read(url);
             Image scaledImage = image.getScaledInstance(180, 100, Image.SCALE_SMOOTH);
 
-            System.out.println("이미지 리드 완");
             imageLabel.setIcon(new ImageIcon(scaledImage));
-            System.out.println("아이콘 적용 완");
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
         }
         add(Box.createHorizontalStrut(20));

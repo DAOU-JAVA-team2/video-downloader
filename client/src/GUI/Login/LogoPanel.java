@@ -16,10 +16,12 @@ public class LogoPanel extends JPanel {
         Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledIcon);
+        imageLabel.setName("imageLabel");
 
         JLabel appName = new JLabel("DAOU LOADER");
         appName.setFont(appName.getFont().deriveFont(20f));
         appName.setPreferredSize(new Dimension(200, 100));
+        appName.setName("appName");
 
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         appName.setAlignmentX(Component.CENTER_ALIGNMENT);
