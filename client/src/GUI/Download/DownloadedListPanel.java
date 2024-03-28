@@ -1,7 +1,8 @@
 package GUI.Download;
 
 import GUI.Common.CustomColors;
-import GUI.Common.DummyDTO;
+import dto.VideoDTO;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ public class DownloadedListPanel extends JPanel {
     private final JPanel contentPane;
     private final JScrollPane scrollPane;
 
-    public DownloadedListPanel(ArrayList<DummyDTO> dtos) {
+    public DownloadedListPanel(ArrayList<VideoDTO> dtos) {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380, 265));
         waitingLabel = new JLabel("다운로드 보관함");
@@ -25,7 +26,7 @@ public class DownloadedListPanel extends JPanel {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(Box.createVerticalStrut(15));
 
-        for (DummyDTO dto : dtos) {
+        for (VideoDTO dto : dtos) {
             DownloadedListCell cell = new DownloadedListCell(dto);
             contentPane.add(cell);
             //셀간 간격

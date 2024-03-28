@@ -17,12 +17,14 @@ public class ButtonPanel extends JPanel {
         extraButton.setBackground(Color.gray);
         extraButton.setForeground(Color.WHITE);
         extraButton.setPreferredSize(new Dimension(100, 30));
+        extraButton.setName("extraButton_u");
 
         logOutButton = new JButton("로그 아웃");
         logOutButton.setBackground(Color.gray);
         logOutButton.setForeground(Color.WHITE);
         logOutButton.setPreferredSize(new Dimension(100, 30));
-        logOutButton.setName("logOutButton");
+
+        logOutButton.setName("logOutButton_u");
 
         add(extraButton);
         add(logOutButton);

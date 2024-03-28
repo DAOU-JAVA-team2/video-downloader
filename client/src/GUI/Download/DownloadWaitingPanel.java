@@ -1,7 +1,8 @@
 package GUI.Download;
 
 import GUI.Common.CustomColors;
-import GUI.Common.DummyDTO;
+import dto.VideoDTO;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class DownloadWaitingPanel extends JPanel {
     private final JProgressBar progressBar;
     private final JButton downloadButton;
 
-    public DownloadWaitingPanel(ArrayList<DummyDTO> dtos) {
+    public DownloadWaitingPanel(ArrayList<VideoDTO> dtos) {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380, 265));
 
@@ -27,7 +28,7 @@ public class DownloadWaitingPanel extends JPanel {
         contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(Box.createVerticalStrut(15));
-        for (DummyDTO dto : dtos) {
+        for (VideoDTO dto : dtos) {
             DownloadWaitingCell cell = new DownloadWaitingCell(dto);
             contentPane.add(cell);
             //셀간 간격

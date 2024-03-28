@@ -1,6 +1,7 @@
 package GUI.Download;
 
-import GUI.Common.DummyDTO;
+
+import dto.VideoDTO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,19 +10,22 @@ import java.net.URL;
 
 public class VideoInfoCell extends JPanel {
     private final JLabel imageLabel;
-    private final JLabel titleLabel;
+//    private final JLabel titleLabel;
+    private final JTextArea titleArea;
     private final JLabel viewCount;
     private final JLabel uploader;
     private final JButton addToDownloadButton;
 
-    public VideoInfoCell(DummyDTO dto) {
+    public VideoInfoCell(VideoDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setBackground(Color.yellow);
+
         //TODO 이미지
         imageLabel = new JLabel();
         try {
-            URL url = new URL(dto.imageURL);
+            URL url = new URL(dto.getThumbnailUrl());
             Image image = ImageIO.read(url);
-            Image scaledImage = image.getScaledInstance(270, 150, Image.SCALE_SMOOTH);
+            Image scaledImage = image.getScaledInstance(200, 130, Image.SCALE_SMOOTH);
             imageLabel.setIcon(new ImageIcon(scaledImage));
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,22 +33,39 @@ public class VideoInfoCell extends JPanel {
         }
         add(Box.createHorizontalStrut(20));
         add(imageLabel);
-        add(Box.createHorizontalStrut(90));
+        add(Box.createHorizontalStrut(60));
         // 정보
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        titleLabel = new JLabel("제목: " + dto.videoTitle);
-        viewCount = new JLabel("조회수: " + dto.viewCount);
-        uploader = new JLabel("업로더: " + dto.uploader);
+//        titleLabel = new JLabel("제목: " + dto.getTitle());
 
-        infoPanel.add(titleLabel);
+        titleArea = new JTextArea(dto.getTitle());
+//        titleArea.setColumns(30);
+//        titleArea.setOpaque(true);
+        titleArea.setBackground(Color.green);
+        titleArea.setLineWrap(true);
+        titleArea.setWrapStyleWord(true);
+        titleArea.setEditable(false);
+        titleArea.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        viewCount = new JLabel("조회수: " + dto.getViewCount());
+        viewCount.setAlignmentX(Component.LEFT_ALIGNMENT);
+        viewCount.setBackground(Color.red);
+
+        uploader = new JLabel("업로더: " + dto.getUploader());
+        uploader.setAlignmentX(Component.LEFT_ALIGNMENT);
+        uploader.setBackground(Color.PINK);
+
+//        infoPanel.add(titleLabel);
+        infoPanel.add(titleArea);
         infoPanel.add(viewCount);
         infoPanel.add(uploader);
-        infoPanel.add(Box.createVerticalStrut(70)); // 수직 간격
+        infoPanel.add(Box.createVerticalStrut(30)); // 수직 간격
 
         // 재생 버튼
         addToDownloadButton = new JButton("다운 목록에 추가");
         addToDownloadButton.setPreferredSize(new Dimension(100, 30));
+        addToDownloadButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         infoPanel.add(addToDownloadButton);
 
         add(infoPanel);
