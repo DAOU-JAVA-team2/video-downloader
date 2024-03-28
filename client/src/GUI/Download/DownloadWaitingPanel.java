@@ -7,6 +7,7 @@ import dto.VideoDTO;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DownloadWaitingPanel extends JPanel {
     private final JLabel waitingLabel;
@@ -15,9 +16,10 @@ public class DownloadWaitingPanel extends JPanel {
     private final JProgressBar progressBar;
     private final JButton downloadButton;
 
-    public DownloadWaitingPanel(ArrayList<VideoDTO> dtos) {
+    public DownloadWaitingPanel(LinkedList<VideoDTO> dtos) {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380, 265));
+        setName(DownloadCompNames.downloadWaitingPanel_r);
 
         waitingLabel = new JLabel("다운로드 대기목록");
         waitingLabel.setFont(waitingLabel.getFont().deriveFont(16f));
@@ -54,6 +56,28 @@ public class DownloadWaitingPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
         add(buttonSet, BorderLayout.SOUTH);
     }
+
+    public void updatePanel(LinkedList<VideoDTO> dtos) {
+        contentPane.removeAll(); // 이전에 추가된 모든 컴포넌트 제거
+
+        for (VideoDTO dto : dtos) {
+            DownloadWaitingCell cell = new DownloadWaitingCell(dto);
+            contentPane.add(cell);
+            // 셀간 간격
+            contentPane.add(Box.createVerticalStrut(15));
+        }
+
+        contentPane.revalidate(); // 패널을 다시 그리기 위해 호출
+        contentPane.repaint();
+
+        //스크롤바 최상단 재설정
+        SwingUtilities.invokeLater(() -> {
+            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+            verticalScrollBar.setValue(0);
+        });
+    }
+
+
 
     private void startDownload() {
         SwingWorker<Void, Integer> worker = new SwingWorker<>() {

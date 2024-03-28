@@ -8,6 +8,10 @@ public class DownloadCompNames {
     public static final String logOutButton_u = "logOutButton_u";
 
     public static final String videoSearchPanel_l = "videoSearchPanel_l";
+    public static final String addToDownloadButton_l = "addToDownloadButton_l";
+
+    public static final String downloadWaitingPanel_r = "DownloadWaitingPanel_r";
+
     //left panel
 
     //right upper panel

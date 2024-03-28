@@ -10,7 +10,9 @@ import java.net.URL;
 
 public class DownloadWaitingCell extends JPanel {
     private final JLabel imageLabel;
-    private final JLabel titleLabel;
+//    private final JLabel titleLabel;
+    private final JTextArea titleArea;
+
     private final JLabel viewCount;
     private final JLabel uploader;
     private final JButton addToDownloadButton;
@@ -23,7 +25,7 @@ public class DownloadWaitingCell extends JPanel {
             URL url = new URL(dto.getThumbnailUrl());
 
             Image image = ImageIO.read(url);
-            Image scaledImage = image.getScaledInstance(180, 100, Image.SCALE_SMOOTH);
+            Image scaledImage = image.getScaledInstance(160, 100, Image.SCALE_SMOOTH);
 
             imageLabel.setIcon(new ImageIcon(scaledImage));
         } catch (Exception e) {
@@ -31,15 +33,24 @@ public class DownloadWaitingCell extends JPanel {
         }
         add(Box.createHorizontalStrut(20));
         add(imageLabel);
-        add(Box.createHorizontalStrut(150));
+        add(Box.createHorizontalStrut(60));
         // 정보
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        titleLabel = new JLabel("제목: " + dto.getTitle());
+        
+        titleArea = new JTextArea(dto.getTitle());
+
+        titleArea.setBackground(Color.green);
+        titleArea.setLineWrap(true);
+        titleArea.setWrapStyleWord(true);
+        titleArea.setEditable(false);
+        titleArea.setAlignmentX(Component.LEFT_ALIGNMENT);
+        titleArea.setFont(titleArea.getFont().deriveFont(12f));
+
         viewCount = new JLabel("조회수: " + dto.getViewCount());
         uploader = new JLabel("업로더: " + dto.getUploader());
 
-        infoPanel.add(titleLabel);
+        infoPanel.add(titleArea);
         infoPanel.add(viewCount);
         infoPanel.add(uploader);
         infoPanel.add(Box.createVerticalStrut(20)); // 수직 간격

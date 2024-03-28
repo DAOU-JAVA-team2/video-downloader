@@ -1,6 +1,7 @@
 package GUI.Download;
 
 
+import controller.ViewController;
 import dto.VideoDTO;
 
 import javax.imageio.ImageIO;
@@ -16,9 +17,12 @@ public class VideoInfoCell extends JPanel {
     private final JLabel uploader;
     private final JButton addToDownloadButton;
 
+    private final VideoDTO dto;
+
     public VideoInfoCell(VideoDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setBackground(Color.yellow);
+        this.dto = dto;
 
         //TODO 이미지
         imageLabel = new JLabel();
@@ -64,9 +68,16 @@ public class VideoInfoCell extends JPanel {
 
         // 재생 버튼
         addToDownloadButton = new JButton("다운 목록에 추가");
+        addToDownloadButton.setName("addToDownloadButton_l");
         addToDownloadButton.setPreferredSize(new Dimension(100, 30));
         addToDownloadButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         infoPanel.add(addToDownloadButton);
+
+        addToDownloadButton.addActionListener(e -> {
+            ViewController.downloadWaitingList.add(dto);
+            System.out.println("다운로드 대기리스트에 dto가 추가되었습니다.");
+            ViewController.updateDownloadWaitingPanel();
+        });
 
         add(infoPanel);
     }

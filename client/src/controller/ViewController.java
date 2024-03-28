@@ -2,23 +2,22 @@ package controller;
 
 import GUI.Download.DownloadCompNames;
 import GUI.Download.DownloadSuperFrame;
+import GUI.Download.DownloadWaitingPanel;
 import GUI.Download.VideoSearchPanel;
 import GUI.Login.LoginSuperFrame;
-import GUI.SampleFrame;
 import dto.UserDTO;
 import dto.VideoDTO;
 import service.CrawlService;
 import service.ServerService;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class ViewController {
@@ -29,7 +28,8 @@ public class ViewController {
     public static String access = null;
     public static JFrame loginFrame = null;
     public static JFrame downFrame = null;
-    public static JFrame sampleFrame;
+//    public static JFrame sampleFrame;
+
     public static ObjectOutputStream clientOut;
     public static ServerService serverService;
     public static CrawlService crawlService;
@@ -43,22 +43,20 @@ public class ViewController {
 
     //검색 결과를 담아서 셀을 그릴 용도의 리스트
     public static ArrayList<VideoDTO> videoSearchList = new ArrayList<>();
-    public static ArrayList<VideoDTO> downloadWaitingList = new ArrayList<>();
+
+    public static LinkedList<VideoDTO> downloadWaitingList = new LinkedList<>();
+
     public static ArrayList<VideoDTO> downloadedList = new ArrayList<>();
 
     // constructor
     public ViewController(Socket socket) throws Exception {
-
-
-
-
 
         this.socket = socket;
         clientOut = new ObjectOutputStream(socket.getOutputStream());
         /** frame setting **/
         loginFrame = new LoginSuperFrame();
         addAuthListener();
-        sampleFrame = new SampleFrame();
+//        sampleFrame = new SampleFrame();
         /** get service **/
         serverService = new ServerService();
         crawlService = new CrawlService();
@@ -117,26 +115,23 @@ public class ViewController {
                 throw new RuntimeException(ex);
             }
         });
-
-
-
-
     }
 
     // Download Frame의 컴포넌트에 액션 넣기
     public static void addDownloadListener(){
         //TODO: 위 패널
+        JButton logOutButton = ((JButton)ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.logOutButton_u));
         JTextField searchField = (JTextField)ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.searchField_u);
         JButton searchButton = (JButton)ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.searchButton_u);
         JPanel videoSearchPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.videoSearchPanel_l);
-//        AtomicReference<JPanel> videoSearchPanel = new AtomicReference<>((JPanel) ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.videoSearchPanel_l));
+        JButton addToDownloadButton = (JButton) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.addToDownloadButton_l);
+        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
+
         //TODO: 좌측 패널
 
         //TODO: 우 상단 패널
 
         //TODO: 우 하단 패널
-
-        // all components
 
         searchButton.addActionListener(e -> {
             String songName = searchField.getText();
@@ -155,20 +150,13 @@ public class ViewController {
                         // 작업 완료 후 UI 업데이트
                         videoSearchList = get(); // doInBackground()의 반환값 가져오기
                         ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
-                        downFrame.revalidate();
-                        downFrame.repaint();
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 }
             };
-
-            // SwingWorker 실행
             worker.execute();
          });
-
-
-        JButton logOutButton = ((JButton)ViewController.findComponentByName(downFrame.getContentPane(), "logOutButton_u"));
 
         // logOutButton
         logOutButton.addActionListener(e->{
@@ -181,6 +169,13 @@ public class ViewController {
                 throw new RuntimeException(ex);
             }
         });
+    }
+
+    public static void updateDownloadWaitingPanel() {
+//        ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
+
+        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
+        ((DownloadWaitingPanel) downloadWaitingPanel).updatePanel(downloadWaitingList);
     }
 
 
@@ -200,4 +195,29 @@ public class ViewController {
         }
         return null; // 이름이 일치하는 컴포넌트가 없는 경우
     }
+
+    // 이름으로 컴포넌트 찾기 메서드
+//    public static Component findComponentBySameName(Container container, String componentName) {
+//        System.out.println("______________________");
+//        Component[] components = container.getComponents();
+//        System.out.println("test222222");
+//        for (Component component : components) {
+//            System.out.println("for" + component.toString());
+//            if (Objects.equals(component.getName(), componentName)) {
+//                System.out.println("______________________");
+//                ((AddToDownloadButton)component).addActionListener(e->{
+//                    downloadWaitingList.add(((AddToDownloadButton)component).getDto());
+//                    System.out.println("끄아악");
+//                });
+//            }
+////            if (component instanceof Container) {
+////                Component foundComponent = findComponentByName((Container) component, componentName);
+////                if (foundComponent != null) {
+////                    return foundComponent; // 하위 컨테이너에서 찾은 컴포넌트 반환
+////                }
+////            }
+//        }
+//        System.out.println("없음");
+//        return null; // 이름이 일치하는 컴포넌트가 없는 경우
+//    }
 }
