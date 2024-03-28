@@ -1,6 +1,7 @@
 package GUI.Download;
 
 import GUI.Common.CustomColors;
+import controller.TestYoutubeService2;
 import dto.VideoDTO;
 
 
@@ -53,7 +54,9 @@ public class DownloadWaitingPanel extends JPanel {
         downloadButton = new JButton("다운로드 시작");
         buttonSet.add(progressBar, BorderLayout.NORTH);
         buttonSet.add(downloadButton, BorderLayout.SOUTH);
-        downloadButton.addActionListener(e -> startDownload());
+
+//        downloadButton.addActionListener(e -> startDownload());
+
         downloadButton.setName(DownloadCompNames.downloadButton_r);
 
         add(waitingLabel, BorderLayout.NORTH);
@@ -96,40 +99,42 @@ public class DownloadWaitingPanel extends JPanel {
     }
 
 
-
-    private void startDownload() {
-        SwingWorker<Void, Integer> worker = new SwingWorker<>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                // 다운로드 시작 전에 진행 상황을 0%로 초기화
-                progressBar.setValue(0);
-
-                // 다운로드 진행 상황을 업데이트하며 다운로드 작업을 수행
-                for (int i = 0; i <= 100; i++) {
-                    Thread.sleep(50); // 다운로드 작업 대신 시간 대기 (예시용)
-                    publish(i); // 진행 상황을 업데이트하여 프로그래스바에 전달
-                }
-
-                return null;
-            }
-
-            @Override
-            protected void process(java.util.List<Integer> chunks) {
-                // 다운로드 진행 상황에 따라 프로그래스바를 업데이트
-                for (int value : chunks) {
-                    progressBar.setValue(value);
-                }
-            }
-
-            @Override
-            protected void done() {
-                // 다운로드가 완료되면 프로그래스바를 100%로 설정
-                progressBar.setValue(100);
-            }
-        };
-
-        // SwingWorker 실행
-        worker.execute();
-    }
+//TODO: 프로그레스바 나중에 수정하자 ㅎ
+//    private void startDownload() {
+//        SwingWorker<Void, Integer> worker = new SwingWorker<>() {
+//            @Override
+//            protected Void doInBackground() throws Exception {
+//                progressBar.setValue(0);
+//
+//                while (true) {
+//                    int progress = TestYoutubeService2.getDownloadProgress();
+//                    System.out.println("진행도::::::" + progress);
+//                    publish(progress);
+//
+//                    if (progress >= 100) {
+//                        break;
+//                    }
+//
+//                    Thread.sleep(50);
+//                }
+//
+//                return null;
+//            }
+//
+//            @Override
+//            protected void process(java.util.List<Integer> chunks) {
+//                for (int value : chunks) {
+//                    progressBar.setValue(value);
+//                }
+//            }
+//
+//            @Override
+//            protected void done() {
+//                progressBar.setValue(100);
+//            }
+//        };
+//
+//        worker.execute();
+//    }
 
 }

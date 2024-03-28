@@ -16,16 +16,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class TestYoutubeService2 {
+    private static volatile int downloadProgress = 0; // volatile 키워드 추가
+
+    public static synchronized void incrementDownloadProgress() {
+        downloadProgress++;
+    }
+
+    public static int getDownloadProgress() {
+        return downloadProgress;
+    }
+
+    public static void resetDownloadProgress() {
+        downloadProgress = 0;
+    }
 
     public ArrayList<VideoDTO> searchYoutubeVideos(String name) {
 
@@ -103,31 +113,50 @@ public class TestYoutubeService2 {
             // youtube-dlp의 전체 경로 지정
             String rootDirectory = System.getProperty("user.dir");
             String youtubeDLPPath = rootDirectory + "/yt-dlp";
+
+            //TODO: 저장 경로
+//            File downloadList = new File("C:\\Users\\김병준\\Desktop\\video-downloader\\client\\downloadList");
+            File downloadList = new File(rootDirectory+"/downloadList");
+//            File downloadList = new File(System.getProperty("user.dir") + "\\client\\downloadList");
+
+            if (!downloadList.exists()) {
+                downloadList.mkdirs(); // 디렉토리가 존재하지 않으면 생성합니다.
+            }
+
+
             // youtube-dlp 실행 명령어와 옵션을 따로 분리하여 전달
             // 직접 URL을 사용하여 다운로드
             String[] command = {"cmd", "/c", youtubeDLPPath + ".exe", "-f", "bestvideo+bestaudio/best", "--merge-output-format", "mp4", "-o", "%(title)s.mp4", videoUrl};
 
             ProcessBuilder builder = new ProcessBuilder(command);
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
 
+            builder.redirectErrorStream(true);
+
+            builder.directory(downloadList);
+
+            Process process = builder.start();
             // 이하 코드는 그대로 유지
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
+                System.out.println("이게 다운 속도인가?");
+                downloadProgress++;
                 System.out.println(line);
+                System.out.println("서비스의 진행도: "+downloadProgress);
             }
 
             int exitCode = process.waitFor();
             if (exitCode == 0) {
+                downloadProgress = 0;
                 return true;
             } else {
+                downloadProgress = 0;
                 return false;
             }
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
+            downloadProgress = 0;
             return false;
         }
     }
-
 }

@@ -1,9 +1,6 @@
 package controller;
 
-import GUI.Download.DownloadCompNames;
-import GUI.Download.DownloadSuperFrame;
-import GUI.Download.DownloadWaitingPanel;
-import GUI.Download.VideoSearchPanel;
+import GUI.Download.*;
 import GUI.Login.LoginSuperFrame;
 import dto.UserDTO;
 import dto.VideoDTO;
@@ -130,10 +127,10 @@ public class ViewController {
         JTextField searchField = (JTextField)ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.searchField_u);
         JButton searchButton = (JButton)ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.searchButton_u);
         JPanel videoSearchPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.videoSearchPanel_l);
-//        JButton addToDownloadButton = (JButton) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.addToDownloadButton_l);
-//        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
-
+        JButton addToDownloadButton = (JButton) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.addToDownloadButton_l);
+        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
         JButton downloadButton = (JButton) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadButton_r);
+        JPanel downloadedListPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadedListPanel_r);
 
         // TODO: 상 단 패 널
         logOutButton.addActionListener(e->{
@@ -180,11 +177,21 @@ public class ViewController {
             for(VideoDTO dto : downloadWaitingList) {
                 boolean result = testYoutubeService2.downloadWithYoutubeDL(dto.getUrl());
                 if (result) {
+
                     System.out.println("다운로드 성공!");
+
+                    downloadWaitingList.remove(dto);
+                    ((DownloadWaitingPanel)downloadWaitingPanel).updatePanel(downloadWaitingList);
+                    downloadedList.add(dto);
+                    ((DownloadedListPanel) downloadedListPanel).updatePanel(downloadedList);
+
                 } else {
                     System.out.println("다운로드 실패 ㅜ");
                 }
             }
+
+
+
             downloadButton.setEnabled(true);
         });
 

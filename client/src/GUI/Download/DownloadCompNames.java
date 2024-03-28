@@ -17,5 +17,6 @@ public class DownloadCompNames {
     //right upper panel
 
     //right below panel
-
+    public static final String downloadedListPanel_r = "downloadedListPanel_r";
+    public static final String playButton_r = "playButton_r";
 }
