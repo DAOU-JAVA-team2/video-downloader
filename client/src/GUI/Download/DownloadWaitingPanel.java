@@ -29,11 +29,14 @@ public class DownloadWaitingPanel extends JPanel {
 
         contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(Box.createVerticalGlue());
         contentPane.add(Box.createVerticalStrut(15));
+
+
         for (VideoDTO dto : dtos) {
             DownloadWaitingCell cell = new DownloadWaitingCell(dto);
             contentPane.add(cell);
-            //셀간 간격
+            // 셀간 간격
             contentPane.add(Box.createVerticalStrut(15));
         }
 
@@ -59,22 +62,36 @@ public class DownloadWaitingPanel extends JPanel {
 
     public void updatePanel(LinkedList<VideoDTO> dtos) {
         contentPane.removeAll(); // 이전에 추가된 모든 컴포넌트 제거
-
+        System.out.println(" dtos의 길이는 다음과 같습니다: "  +dtos.size());
         for (VideoDTO dto : dtos) {
-            DownloadWaitingCell cell = new DownloadWaitingCell(dto);
-            contentPane.add(cell);
-            // 셀간 간격
-            contentPane.add(Box.createVerticalStrut(15));
+            if (dtos.size() == 1) {
+                System.out.println("셀이 하나인 경우 시작합니다.");
+                DownloadWaitingCell cell = new DownloadWaitingCell(dto);
+                contentPane.add(cell);
+                JPanel dummy = new JPanel();
+                System.out.println("더미 패널이 생겼습니다.");
+                dummy.setPreferredSize(new Dimension(200,140));
+                dummy.setOpaque(true);
+//                dummy.setBackground(Color.black);
+                contentPane.add(dummy);
+                System.out.println("더미 패널이 추가되었습니다.");
+            }else{
+                System.out.println("셀 업데이트를 시작합니다.");
+                DownloadWaitingCell cell = new DownloadWaitingCell(dto);
+                contentPane.add(cell);
+                // 셀간 간격
+                contentPane.add(Box.createVerticalStrut(15));
+            }
         }
 
         contentPane.revalidate(); // 패널을 다시 그리기 위해 호출
         contentPane.repaint();
 
         //스크롤바 최상단 재설정
-        SwingUtilities.invokeLater(() -> {
-            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-            verticalScrollBar.setValue(0);
-        });
+//        SwingUtilities.invokeLater(() -> {
+//            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+//            verticalScrollBar.setValue(0);
+//        });
     }
 
 

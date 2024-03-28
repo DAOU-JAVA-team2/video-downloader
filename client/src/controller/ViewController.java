@@ -171,12 +171,27 @@ public class ViewController {
         });
     }
 
-    public static void updateDownloadWaitingPanel() {
-//        ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
+//    public static void updateDownloadWaitingPanel() {
+////        ((VideoSearchPanel) videoSearchPanel).updatePanel(videoSearchList);
+//
+//        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
+//        ((DownloadWaitingPanel) downloadWaitingPanel).updatePanel(downloadWaitingList);
+//    }
 
-        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
-        ((DownloadWaitingPanel) downloadWaitingPanel).updatePanel(downloadWaitingList);
+    public static void updateDownloadWaitingPanel() {
+        System.out.println("대기 패널 업데이트를 시작합니다.");
+        SwingWorker<Void, Void> panelUpdater = new SwingWorker<Void, Void>() {
+            JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.downloadWaitingPanel_r);
+
+            @Override
+            protected Void doInBackground() throws Exception {
+                ((DownloadWaitingPanel) downloadWaitingPanel).updatePanel(downloadWaitingList);
+                return null;
+            }
+        };
+        panelUpdater.execute();
     }
+
 
 
     // 이름으로 컴포넌트 찾기 메서드
