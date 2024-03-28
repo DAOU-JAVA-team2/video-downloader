@@ -1,4 +1,4 @@
-package GUI.Login;
+package GUI.Auth;
 
 import GUI.Common.CustomColors;
 
@@ -10,7 +10,6 @@ public class LogoPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(CustomColors.MAIN_BLUE);
 
-//        ImageIcon originalIcon = new ImageIcon("setting/test_client/DaouLogo.png");
         ImageIcon originalIcon = new ImageIcon("src/GUI/DaouLogo.png");
         Image image = originalIcon.getImage();
         Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -32,4 +31,3 @@ public class LogoPanel extends JPanel {
         add(appName);
     }
 }
-

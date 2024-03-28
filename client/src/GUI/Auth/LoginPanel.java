@@ -1,4 +1,4 @@
-package GUI.Login;
+package GUI.Auth;
 
 import GUI.Common.CustomColors;
 
@@ -34,7 +34,6 @@ public class LoginPanel extends JPanel {
         passwordField.setPreferredSize(new Dimension(200, 30));
         passwordField.setAlignmentX(Component.LEFT_ALIGNMENT);
         passwordField.setName("passwordField");
-
 
         add(passwordLabel);
         add(passwordField);
