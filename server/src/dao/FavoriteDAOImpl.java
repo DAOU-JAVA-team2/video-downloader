@@ -16,7 +16,7 @@ public class FavoriteDAOImpl extends DatabaseUtil implements FavoriteDAO {
 
     // constructor
     public FavoriteDAOImpl() throws Exception {
-        pStmtInsert = conn.prepareStatement("INSERT into Favorite values (?, ?)");
+        pStmtInsert = conn.prepareStatement("INSERT into Favorite (user_id , video_id) values (?, ?)");
         pStmtSelect = conn.prepareStatement("SELECT * from Favorite WHERE userId=?");
         pStmtDelete = conn.prepareStatement("DELETE FROM Favorite WHERE userId=? and videoId=?");
     }
