@@ -171,6 +171,15 @@ public class ViewController {
                             System.out.println("다운로드 성공!");
                             iterator.remove();
                             downloadedList.add(dto);
+                            /** Junha Add Start **/
+                            // Request Server
+                            try {
+                                serverService.videoAdd(dto);
+                            }
+                            catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            /** Junha Add End **/
 
                             ((DownloadWaitingPanel) downloadWaitingPanel).updatePanel(downloadWaitingList);
                             ((DownloadedListPanel) downloadedListPanel).updatePanel(downloadedList);
