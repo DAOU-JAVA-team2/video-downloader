@@ -57,7 +57,9 @@ public class UserDAOImpl extends DatabaseUtil implements UserDAO{
         rs = pStmtSelect.executeQuery();
 
         UserDTO dto = new UserDTO();
-        dto.setUser_id(rs.getInt("user_id"));
+        if (rs.next()) {
+            dto.setUser_id(rs.getInt("user_id"));
+        }
         return dto;
     }
 
