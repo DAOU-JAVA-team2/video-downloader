@@ -19,7 +19,7 @@ public class VideoSearchPanel extends JPanel {
         contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(Box.createVerticalStrut(15));
-        contentPane.setBackground(Color.cyan);
+//        contentPane.setBackground(Color.cyan);
         for (VideoDTO dto : dtos) {
             VideoInfoCell cell = new VideoInfoCell(dto);
             contentPane.add(cell);
@@ -29,7 +29,7 @@ public class VideoSearchPanel extends JPanel {
 
         scrollPane = new JScrollPane(contentPane);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBackground(Color.BLUE);
+//        scrollPane.setBackground(Color.BLUE);
 
         add(scrollPane, BorderLayout.CENTER);
     }

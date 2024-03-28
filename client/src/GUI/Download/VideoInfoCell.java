@@ -1,6 +1,7 @@
 package GUI.Download;
 
 
+import GUI.Common.CustomColors;
 import controller.ViewController;
 import dto.VideoDTO;
 
@@ -21,7 +22,7 @@ public class VideoInfoCell extends JPanel {
 
     public VideoInfoCell(VideoDTO dto) {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setBackground(Color.yellow);
+//        setBackground(Color.yellow);
         this.dto = dto;
 
         //TODO 이미지
@@ -44,23 +45,21 @@ public class VideoInfoCell extends JPanel {
 //        titleLabel = new JLabel("제목: " + dto.getTitle());
 
         titleArea = new JTextArea(dto.getTitle());
-//        titleArea.setColumns(30);
-//        titleArea.setOpaque(true);
-        titleArea.setBackground(Color.green);
+        titleArea.setBackground(CustomColors.DEFAULT_GRAY);
         titleArea.setLineWrap(true);
         titleArea.setWrapStyleWord(true);
         titleArea.setEditable(false);
         titleArea.setAlignmentX(Component.LEFT_ALIGNMENT);
+        titleArea.setFont(new Font("맑은 고딕",Font.BOLD,12));
 
         viewCount = new JLabel("조회수: " + dto.getViewCount());
         viewCount.setAlignmentX(Component.LEFT_ALIGNMENT);
-        viewCount.setBackground(Color.red);
+        viewCount.setForeground(Color.gray);
 
         uploader = new JLabel("업로더: " + dto.getUploader());
         uploader.setAlignmentX(Component.LEFT_ALIGNMENT);
-        uploader.setBackground(Color.PINK);
+        uploader.setForeground(Color.gray);
 
-//        infoPanel.add(titleLabel);
         infoPanel.add(titleArea);
         infoPanel.add(viewCount);
         infoPanel.add(uploader);

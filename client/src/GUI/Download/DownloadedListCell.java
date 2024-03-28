@@ -43,10 +43,16 @@ public class DownloadedListCell extends JPanel {
         titleArea.setWrapStyleWord(true);
         titleArea.setEditable(false);
         titleArea.setAlignmentX(Component.LEFT_ALIGNMENT);
-        titleArea.setFont(titleArea.getFont().deriveFont(10f));
+//        titleArea.setFont(titleArea.getFont().deriveFont(10f));
+        titleArea.setFont(new Font("맑은 고딕",Font.BOLD,10));
 
         viewCount = new JLabel("조회수: " + dto.getViewCount());
+        viewCount.setFont(viewCount.getFont().deriveFont(10f));
+        viewCount.setForeground(Color.gray);
+
         uploader = new JLabel("업로더: " + dto.getUploader());
+        uploader.setFont(uploader.getFont().deriveFont(10f));
+        uploader.setForeground(Color.gray);
 
         infoPanel.add(titleArea);
 

@@ -153,7 +153,8 @@ public class ViewController {
                 protected ArrayList<VideoDTO> doInBackground() throws Exception {
                     // 백그라운드에서 실행될 작업 수행
 //                    return testYoutubeService.searchAndDisplayResults(songName);
-                    return testYoutubeService2.searchYoutubeVideos(songName);
+//                    return testYoutubeService2.searchYoutubeVideos(songName);
+                    return testYoutubeService2.searchYoutubeVideos2(songName);
                 }
 
                 @Override
@@ -171,28 +172,37 @@ public class ViewController {
         });
 
         //TODO: 우 상단 패널
-        downloadButton.addActionListener(e-> {
-            //다운로드 버튼 비활성화
+        downloadButton.addActionListener(e -> {
+            // 다운로드 버튼 비활성화
             downloadButton.setEnabled(false);
-            for(VideoDTO dto : downloadWaitingList) {
-                boolean result = testYoutubeService2.downloadWithYoutubeDL(dto.getUrl());
-                if (result) {
 
-                    System.out.println("다운로드 성공!");
-
-                    downloadWaitingList.remove(dto);
-                    ((DownloadWaitingPanel)downloadWaitingPanel).updatePanel(downloadWaitingList);
-                    downloadedList.add(dto);
-                    ((DownloadedListPanel) downloadedListPanel).updatePanel(downloadedList);
-
-                } else {
-                    System.out.println("다운로드 실패 ㅜ");
+            SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Void doInBackground() {
+                    for (VideoDTO dto : downloadWaitingList) {
+                        boolean result = testYoutubeService2.downloadWithYoutubeDL(dto.getUrl());
+                        if (result) {
+                            System.out.println("다운로드 성공!");
+                            downloadWaitingList.remove(dto);
+                            downloadedList.add(dto);
+                        } else {
+                            System.out.println("다운로드 실패 ㅜ");
+                        }
+                    }
+                    return null;
                 }
-            }
 
+                @Override
+                protected void done() {
+                    // 작업이 완료되면 UI 업데이트 및 다운로드 버튼 활성화
+                    ((DownloadWaitingPanel) downloadWaitingPanel).updatePanel(downloadWaitingList);
+                    ((DownloadedListPanel) downloadedListPanel).updatePanel(downloadedList);
+                    downloadButton.setEnabled(true);
+                }
+            };
 
-
-            downloadButton.setEnabled(true);
+            // SwingWorker 실행
+            worker.execute();
         });
 
 

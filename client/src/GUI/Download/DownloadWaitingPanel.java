@@ -7,7 +7,6 @@ import dto.VideoDTO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DownloadWaitingPanel extends JPanel {
@@ -50,12 +49,12 @@ public class DownloadWaitingPanel extends JPanel {
         progressBar = new JProgressBar();
         progressBar.setStringPainted(true);
         progressBar.setForeground(CustomColors.PROGRESS_GREEN);
-
+        progressBar.setName("progressbar_r");
         downloadButton = new JButton("다운로드 시작");
         buttonSet.add(progressBar, BorderLayout.NORTH);
         buttonSet.add(downloadButton, BorderLayout.SOUTH);
 
-//        downloadButton.addActionListener(e -> startDownload());
+        downloadButton.addActionListener(e -> progressbarUpdate());
 
         downloadButton.setName(DownloadCompNames.downloadButton_r);
 
@@ -100,24 +99,18 @@ public class DownloadWaitingPanel extends JPanel {
 
 
 //TODO: 프로그레스바 나중에 수정하자 ㅎ
-//    private void startDownload() {
+//    private void progressbarUpdate() {
 //        SwingWorker<Void, Integer> worker = new SwingWorker<>() {
 //            @Override
 //            protected Void doInBackground() throws Exception {
 //                progressBar.setValue(0);
 //
-//                while (true) {
+//                while (progressBar.getValue() < 100) {
 //                    int progress = TestYoutubeService2.getDownloadProgress();
 //                    System.out.println("진행도::::::" + progress);
 //                    publish(progress);
-//
-//                    if (progress >= 100) {
-//                        break;
-//                    }
-//
 //                    Thread.sleep(50);
 //                }
-//
 //                return null;
 //            }
 //
@@ -133,8 +126,30 @@ public class DownloadWaitingPanel extends JPanel {
 //                progressBar.setValue(100);
 //            }
 //        };
-//
 //        worker.execute();
 //    }
 
+
+    private void progressbarUpdate() {
+        SwingUtilities.invokeLater(() -> {
+            progressBar.setValue(0);
+
+            Thread workerThread = new Thread(() -> {
+                while (progressBar.getValue() < 100) {
+                    int progress = TestYoutubeService2.getDownloadProgress();
+                    System.out.println("진행도::::::" + progress);
+                    progressBar.setValue(progress);
+
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                progressBar.setValue(100);
+            });
+
+            workerThread.start();
+        });
+    }
 }
