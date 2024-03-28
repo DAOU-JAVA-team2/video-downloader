@@ -54,6 +54,7 @@ public class DownloadWaitingPanel extends JPanel {
         buttonSet.add(progressBar, BorderLayout.NORTH);
         buttonSet.add(downloadButton, BorderLayout.SOUTH);
         downloadButton.addActionListener(e -> startDownload());
+        downloadButton.setName(DownloadCompNames.downloadButton_r);
 
         add(waitingLabel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);

@@ -11,7 +11,7 @@ public class DownloadCompNames {
     public static final String addToDownloadButton_l = "addToDownloadButton_l";
 
     public static final String downloadWaitingPanel_r = "DownloadWaitingPanel_r";
-
+    public static final String downloadButton_r = "downloadButton_r";
     //left panel
 
     //right upper panel

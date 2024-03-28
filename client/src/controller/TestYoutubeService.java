@@ -164,7 +164,7 @@ public class TestYoutubeService {
         }
     }
 
-    private void downloadWithYoutubeDL(String videoUrl) {
+    private boolean downloadWithYoutubeDL(String videoUrl) {
         try {
             // youtube-dlp의 전체 경로 지정
             String rootDirectory = System.getProperty("user.dir");
@@ -186,13 +186,13 @@ public class TestYoutubeService {
 
             int exitCode = process.waitFor();
             if (exitCode == 0) {
-//                JOptionPane.showMessageDialog(this, "다운로드가 완료되었습니다.");
+                return true;
             } else {
-//                JOptionPane.showMessageDialog(this, "다운로드 중 오류가 발생했습니다.");
+                return false;
             }
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
-//            JOptionPane.showMessageDialog(this, "다운로드 중 오류가 발생했습니다.");
+            return false;
         }
     }
 

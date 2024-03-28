@@ -11,6 +11,7 @@ import service.CrawlService;
 import service.ServerService;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -129,15 +130,24 @@ public class ViewController {
         JTextField searchField = (JTextField)ViewController.findComponentByName(downFrame.getContentPane(), DownloadCompNames.searchField_u);
         JButton searchButton = (JButton)ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.searchButton_u);
         JPanel videoSearchPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.videoSearchPanel_l);
-        JButton addToDownloadButton = (JButton) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.addToDownloadButton_l);
-        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
+//        JButton addToDownloadButton = (JButton) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.addToDownloadButton_l);
+//        JPanel downloadWaitingPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadWaitingPanel_r);
+
+        JButton downloadButton = (JButton) ViewController.findComponentByName(downFrame.getContentPane(),DownloadCompNames.downloadButton_r);
+
+        // TODO: 상 단 패 널
+        logOutButton.addActionListener(e->{
+            System.out.println("Click logOutButton");
+            try {
+                UserDTO dto = new UserDTO();
+                dto.setAccess(access);
+                serverService.userLogout(dto);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         //TODO: 좌측 패널
-
-        //TODO: 우 상단 패널
-
-        //TODO: 우 하단 패널
-
         searchButton.addActionListener(e -> {
             String songName = searchField.getText();
 
@@ -161,19 +171,28 @@ public class ViewController {
                 }
             };
             worker.execute();
-         });
-
-        // logOutButton
-        logOutButton.addActionListener(e->{
-            System.out.println("Click logOutButton");
-            try {
-                UserDTO dto = new UserDTO();
-                dto.setAccess(access);
-                serverService.userLogout(dto);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
         });
+
+        //TODO: 우 상단 패널
+        downloadButton.addActionListener(e-> {
+            //다운로드 버튼 비활성화
+            downloadButton.setEnabled(false);
+            for(VideoDTO dto : downloadWaitingList) {
+                boolean result = testYoutubeService2.downloadWithYoutubeDL(dto.getUrl());
+                if (result) {
+                    System.out.println("다운로드 성공!");
+                } else {
+                    System.out.println("다운로드 실패 ㅜ");
+                }
+            }
+            downloadButton.setEnabled(true);
+        });
+
+
+
+        //TODO: 우 하단 패널
+
+
     }
 
 //    public static void updateDownloadWaitingPanel() {

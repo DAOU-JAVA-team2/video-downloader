@@ -14,7 +14,6 @@ import java.net.URL;
 public class DownloadWaitingCell extends JPanel {
     private final JLabel imageLabel;
     private final JTextArea titleArea;
-
     private final JLabel viewCount;
     private final JLabel uploader;
     private final JButton waitingDeleteButton;

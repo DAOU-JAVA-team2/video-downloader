@@ -26,34 +26,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class TestYoutubeService2 {
-//    public void searchAndDisplayResults() {
-//        String songName = songNameField.getText();
-//        resultArea.setText(""); // 이전 결과 지우기
-//        videoPanel.removeAll(); // 이전 영상 정보 패널 지우기
-//
-//        try {
-//            String encodedSongName = URLEncoder.encode(songName, "UTF-8");
-//            List<VideoDTO> videoLists = searchYoutubeVideos(encodedSongName);
-//
-//            if (videoLists != null) {
-//                for (VideoDTO videoInfo : videoLists) {
-//                    createVideoPanel(videoInfo);
-//                }
-//            } else {
-//                resultArea.append("해당 곡을 찾을 수 없습니다.");
-//            }
-//
-//            // 패널 갱신
-//            videoPanel.revalidate();
-//            videoPanel.repaint();
-//
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//            JOptionPane.showMessageDialog(this, "곡 이름을 인코딩하는 중 오류가 발생했습니다.");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public ArrayList<VideoDTO> searchYoutubeVideos(String name) {
 
@@ -124,6 +96,38 @@ public class TestYoutubeService2 {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String formattedCount = decimalFormat.format(viewCount);
         return formattedCount + "회";
+    }
+
+    public boolean downloadWithYoutubeDL(String videoUrl) {
+        try {
+            // youtube-dlp의 전체 경로 지정
+            String rootDirectory = System.getProperty("user.dir");
+            String youtubeDLPPath = rootDirectory + "/yt-dlp";
+            // youtube-dlp 실행 명령어와 옵션을 따로 분리하여 전달
+            // 직접 URL을 사용하여 다운로드
+            String[] command = {"cmd", "/c", youtubeDLPPath + ".exe", "-f", "bestvideo+bestaudio/best", "--merge-output-format", "mp4", "-o", "%(title)s.mp4", videoUrl};
+
+            ProcessBuilder builder = new ProcessBuilder(command);
+            builder.redirectErrorStream(true);
+            Process process = builder.start();
+
+            // 이하 코드는 그대로 유지
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException | InterruptedException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }
