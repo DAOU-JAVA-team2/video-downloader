@@ -13,7 +13,7 @@ public class VideoDAOImpl extends DatabaseUtil implements VideoDAO {
     PreparedStatement pStmtSelect;
     PreparedStatement pStmtDelete;
     public VideoDAOImpl() throws Exception {
-        pStmtInsert = conn.prepareStatement("INSERT into Video values (?, ?)");
+        pStmtInsert = conn.prepareStatement("INSERT into Video (title, url)  values (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
         pStmtSelect = conn.prepareStatement("SELECT * from Video WHERE videoId=?");
         pStmtDelete = conn.prepareStatement("DELETE FROM Video WHERE title=? and url=?");
     }
@@ -33,9 +33,9 @@ public class VideoDAOImpl extends DatabaseUtil implements VideoDAO {
     @Override
     public int insertVideo(VideoDTO dto) throws SQLException {
         pStmtInsert.setString(1, dto.getTitle());
-        pStmtInsert.setString(1, dto.getUrl());
+        pStmtInsert.setString(2, dto.getUrl());
         try{
-            pStmtInsert.executeQuery();
+            pStmtInsert.executeUpdate();
             ResultSet generatedKeys = pStmtInsert.getGeneratedKeys();
             if (generatedKeys.next()) {
                 // video_id를 반환합니다.
@@ -46,14 +46,14 @@ public class VideoDAOImpl extends DatabaseUtil implements VideoDAO {
             }
         }
         catch (SQLException e){
-            e.getStackTrace();
+            e.printStackTrace();
             return -1;
         }
     }
     @Override
     public boolean deleteVideo(VideoDTO dto) throws SQLException {
         pStmtDelete.setString(1, dto.getTitle());
-        pStmtDelete.setString(1, dto.getUrl());
+        pStmtDelete.setString(2, dto.getUrl());
         try{
             pStmtDelete.executeQuery();
             return true;
