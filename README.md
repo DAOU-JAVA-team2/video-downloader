@@ -25,7 +25,7 @@ Intellij 사용 권장
 ```
 4. DB 조회 및 수정
 ```
-Maria DB를 통해 가능
+Heidi SQL을 통해 Maria DB를 조회 및 수정 가능
 ```
 * * *
 ### 프로젝트 설계 구조
