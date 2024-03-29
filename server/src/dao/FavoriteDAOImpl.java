@@ -56,13 +56,12 @@ public class FavoriteDAOImpl extends DatabaseUtil implements FavoriteDAO {
     public List<VideoDTO> getFavoriteList(FavoriteDTO dto) throws SQLException {
         List<VideoDTO> video_list = new ArrayList<>();
         pStmtSelect.setInt(1, dto.getUser_id());
+
         try {
-            rs = pStmtSelect.executeQuery();
+            ResultSet rs = pStmtSelect.executeQuery();
             while(rs.next()) {
-                FavoriteDTO fDto = new FavoriteDTO();
                 VideoDTO vDto;
                 vDto = getVideoById(rs.getInt("video_id"));
-
                 vDto.setTitle(vDto.getTitle());
                 vDto.setUrl(vDto.getUrl());
                 video_list.add(vDto);
@@ -79,14 +78,15 @@ public class FavoriteDAOImpl extends DatabaseUtil implements FavoriteDAO {
     public VideoDTO getVideoById(int videoId) throws SQLException {
         pStmtSelectVideo.setInt(1, videoId);
         rs = pStmtSelectVideo.executeQuery();
-        System.out.println(rs);
 
         VideoDTO dto = new VideoDTO();
         while (rs.next()){
-            System.out.println(rs.getString("VIDEO_ID"));
+            System.out.println("find video id : " + rs.getString("VIDEO_ID"));
             dto.setVideo_id(videoId);
             dto.setUrl(rs.getString("URL"));
             dto.setTitle(rs.getString("TITLE"));
+            dto.setViewCount(rs.getString("VIEW_COUNT"));
+            dto.setThumbnailUrl(rs.getString("THUMNAIL_URL"));
             break;
         }
         return dto;

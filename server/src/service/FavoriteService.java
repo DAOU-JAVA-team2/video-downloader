@@ -59,7 +59,9 @@ public class FavoriteService {
 
             response.put("msg", result != null ? "Success" : "Failed");
             if (result != null){
-                response.put("list", result.toString());
+                Gson gson = new Gson();
+                String jsonList = gson.toJson(result);
+                response.put("list", jsonList);
             }
         }
         catch (Exception e){

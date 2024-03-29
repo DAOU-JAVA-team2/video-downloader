@@ -34,6 +34,8 @@ public class VideoDAOImpl extends DatabaseUtil implements VideoDAO {
     public int insertVideo(VideoDTO dto) throws SQLException {
         pStmtInsert.setString(1, dto.getTitle());
         pStmtInsert.setString(2, dto.getUrl());
+        pStmtInsert.setString(3, dto.getViewCount());
+        pStmtInsert.setString(4, dto.getThumbnailUrl());
         try{
             pStmtInsert.executeUpdate();
             ResultSet generatedKeys = pStmtInsert.getGeneratedKeys();
