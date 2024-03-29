@@ -1,5 +1,3 @@
-# video-downloader
-
 ## DAOU LOADER: 동영상 다운로드 프로그램
 ***"다우기술 ITS부문 신입사원 JAVA 활용 프로젝트"***
 
@@ -14,13 +12,23 @@
 
 
 1. 클론
+```
 git clone https://github.com/DAOU-JAVA-team2/video-downloader.git
+```
 2. 폴더이동
+```
 cd develop/
+```
 3. 코드로 빌드시(IP 주소 확인 요망)
+```
 Intellij 사용 권장
+```
+
 4. DB 조회 및 수정
+```
 Maria DB를 통해 가능
+```
+
 * * *
 ### 프로젝트 설계 구조
 1. Overview
