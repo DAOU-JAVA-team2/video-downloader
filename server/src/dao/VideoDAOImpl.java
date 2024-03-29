@@ -13,7 +13,7 @@ public class VideoDAOImpl extends DatabaseUtil implements VideoDAO {
     PreparedStatement pStmtSelect;
     PreparedStatement pStmtDelete;
     public VideoDAOImpl() throws Exception {
-        pStmtInsert = conn.prepareStatement("INSERT into Video (title, url)  values (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+        pStmtInsert = conn.prepareStatement("INSERT into Video (title, url, VIEW_COUNT, THUMNAIL_URL)  values (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
         pStmtSelect = conn.prepareStatement("SELECT * from Video WHERE videoId=?");
         pStmtDelete = conn.prepareStatement("DELETE FROM Video WHERE title=? and url=?");
     }

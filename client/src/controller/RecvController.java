@@ -1,15 +1,20 @@
 package controller;
 
+import GUI.Common.CompNames;
+import GUI.Download.DownloadWaitingPanel;
+import GUI.Download.DownloadedListPanel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import dto.UserDTO;
 import dto.VideoDTO;
 import network.Response;
 
 import javax.swing.*;
 import java.io.ObjectInputStream;
+import java.lang.reflect.Type;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.net.SocketException;
+import java.util.*;
 
 import static controller.ViewController.*;
 
@@ -100,9 +105,40 @@ public class RecvController implements Runnable {
                         break;
                     case "favorite/getList":
                         if (Objects.equals(response.get("msg"), "Success")){
-                            List<VideoDTO> video_list = new ArrayList<>();
-                            System.out.println("리스트 확인");
-                            System.out.println(response.get("list"));
+                            String jsonList = (String) response.get("list"); // 응답에서 JSON 형식의 문자열을 가져옵니다.
+
+                            // JSON 문자열을 List<VideoDTO>로 변환합니다.
+                            Gson gson = new Gson();
+                            Type videoListType = new TypeToken<List<VideoDTO>>(){}.getType();
+                            List<VideoDTO> video_list = gson.fromJson(jsonList, videoListType);
+
+                            // 변환된 List<VideoDTO>를 출력합니다.
+                            for (VideoDTO videoDTO : video_list) {
+                                System.out.println("Title: " + videoDTO.getTitle() + ", URL: " + videoDTO.getUrl());
+                            }
+                            System.out.println(video_list);
+                            downloadedList = (ArrayList<VideoDTO>)video_list;
+
+                            // redown
+                            Iterator<VideoDTO> iterator = downloadedList.iterator();
+                            try{
+                                while (iterator.hasNext()) {
+                                    VideoDTO dto = iterator.next();
+                                    System.out.println(dto.toString());
+                                    boolean result = testYoutubeService2.downloadWithYoutubeDL(dto);
+                                    if (result) {
+                                        System.out.println("다운로드 성공!");
+                                    } else {
+                                        System.out.println("다운로드 실패 ㅜ");
+                                    }
+                                }
+                            }
+                            catch (Exception e){
+                                System.out.println("reDown end error");
+                            }
+                            // reload
+                            JPanel downloadedListPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(), CompNames.downloadedListPanel_r);
+                            ((DownloadedListPanel) downloadedListPanel).updatePanel(downloadedList);
                         }
                         else {
                             System.out.println("리스트 확인 실패");
@@ -128,9 +164,13 @@ public class RecvController implements Runnable {
                         break;
                 }
             }
+            catch (SocketException e){
+                System.out.println("Socket disConnected");
+                break;
+            }
             catch (Exception e) {
                 System.out.println("recv error");
-                break;
+                e.printStackTrace();
             }
         }
         // recv logic end -> close socket

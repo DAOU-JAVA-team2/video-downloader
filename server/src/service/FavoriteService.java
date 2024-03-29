@@ -5,6 +5,7 @@ import dto.FavoriteDTO;
 import dto.VideoDTO;
 import network.Request;
 import network.Response;
+import com.google.gson.Gson;
 
 import java.util.List;
 
