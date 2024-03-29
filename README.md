@@ -23,12 +23,10 @@ cd develop/
 ```
 Intellij 사용 권장
 ```
-
 4. DB 조회 및 수정
 ```
 Maria DB를 통해 가능
 ```
-
 * * *
 ### 프로젝트 설계 구조
 1. Overview
@@ -41,7 +39,19 @@ Maria DB를 통해 가능
 
 	2.2. Client 디자인 패턴
 ![스크린샷 2024-03-29 095633](https://github.com/DAOU-JAVA-team2/video-downloader/assets/164966737/0e8b074a-b264-4592-b07a-b1528f4b027c)
-3.   핵심 기능 요약
+******
+### 프로젝트 핵심 기능 설명
+
+1.   핵심 기능 요약
 ![스크린샷 2024-03-29 101456](https://github.com/DAOU-JAVA-team2/video-downloader/assets/164966737/9c37b77b-44f0-4c19-9a33-ab19f5404d54)
 
-***
+2. 화면 구현 부문
+
+
+![그림3](https://github.com/DAOU-JAVA-team2/video-downloader/assets/164966737/aa0e2477-da6f-4144-9931-7febfda8625d)
+- [프레임 - 패널 - 컴포넌트] 구조 설정을 통한 가독성 향상 및 디버깅 대응 용이성 증대
+- 이러한 요소를 활용하여 아래와 같이 화면 구현
+![그림2](https://github.com/DAOU-JAVA-team2/video-downloader/assets/164966737/256fdb88-64bb-4d98-a265-ea00d5ac098c)
+- 상기 구조와 다양한 레이아웃을 적용하여 화면 설계
+
+
