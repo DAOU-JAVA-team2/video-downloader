@@ -56,13 +56,12 @@ public class ViewController {
         if (downFrame == null) {
             downFrame = new DownloadSuperFrame();
             addDownloadListener();
-
+            loginFrame.setVisible(false);
 
             //TODO: 초기 화면 검색어 (랜덤하게 나옴)
             JPanel videoSearchPanel = (JPanel) ViewController.findComponentByName(downFrame.getContentPane(), CompNames.videoSearchPanel_l);
             ArrayList<VideoDTO> initData = testYoutubeService2.searchYoutubeVideos(getRandomSong());
             ((VideoSearchPanel) videoSearchPanel).updatePanel(initData);
-
             loginFrame.dispose();
             loginFrame = null;
         } else if (loginFrame == null) {

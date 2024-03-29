@@ -133,14 +133,25 @@ public class DownloadWaitingPanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             progressBar.setValue(0);
             Thread workerThread = new Thread(() -> {
-                int buffer = 0;
-
                 while (!ViewController.downloadWaitingList.isEmpty()) {
                     int progress = CrawlService.getDownloadProgress();
-                    progressBar.setValue(progress);
-
                     try {
-                        Thread.sleep(50);
+                        if (progress > 100) {
+                            Thread.sleep(15000);
+                        } else if (progress > 200) {
+                            Thread.sleep(15000);
+                        } else if (progress > 300) {
+                            Thread.sleep(15000);
+                        } else if (progress > 400) {
+                            Thread.sleep(15000);
+                        } else if (progress > 500) {
+                            Thread.sleep(15000);
+                        }
+                        else {
+                            Thread.sleep(1000);
+                        }
+                        progressBar.setValue(progress);
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

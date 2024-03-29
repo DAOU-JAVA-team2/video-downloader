@@ -38,7 +38,7 @@ public class DownloadedListCell extends JPanel {
 
         add(Box.createHorizontalStrut(20));
         add(imageLabel);
-        add(Box.createHorizontalStrut(150));
+        add(Box.createHorizontalStrut(60));
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
