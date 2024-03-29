@@ -138,7 +138,7 @@ public class ViewController {
             SwingWorker<ArrayList<VideoDTO>, Void> worker = new SwingWorker<>() {
                 @Override
                 protected ArrayList<VideoDTO> doInBackground() throws Exception {
-                    return testYoutubeService2.searchYoutubeVideos2(songName);
+                    return testYoutubeService2.searchYoutubeVideos(songName);
                 }
 
                 @Override
@@ -166,7 +166,7 @@ public class ViewController {
                     Iterator<VideoDTO> iterator = downloadWaitingList.iterator();
                     while (iterator.hasNext()) {
                         VideoDTO dto = iterator.next();
-                        boolean result = testYoutubeService2.downloadWithYoutubeDL(dto.getUrl());
+                        boolean result = testYoutubeService2.downloadWithYoutubeDL(dto);
                         if (result) {
                             System.out.println("다운로드 성공!");
                             iterator.remove();

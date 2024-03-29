@@ -80,7 +80,7 @@ public class ServerService {
         request.put("select", "favorite/getList");
         // add data
         request.put("access", dto.getAccess());
-        request.put("userId", String.valueOf(dto.getUser_id()));
+//        request.put("userId", String.valueOf(dto.getUser_id()));
         // return
         clientOut.writeObject(request);
         clientOut.flush();
