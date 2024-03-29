@@ -30,6 +30,8 @@ public class VideoService {
     public Response videoAdd(Request request) throws Exception {
         videoDTO.setTitle(request.get("title"));
         videoDTO.setUrl(request.get("url"));
+        videoDTO.setThumbnailUrl(request.get("thumNail"));
+        videoDTO.setViewCount(request.get("viewCount"));
         int video_id = dbUtil.insertVideo(videoDTO);
 
         response = new Response();

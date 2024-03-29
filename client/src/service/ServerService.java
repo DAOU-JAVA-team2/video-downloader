@@ -58,6 +58,8 @@ public class ServerService {
         // add data
         request.put("title", dto.getTitle());
         request.put("url", dto.getUrl());
+        request.put("thumNail", dto.getThumbnailUrl());
+        request.put("viewCount", dto.getViewCount());
         request.put("access", access);
         // return
         clientOut.writeObject(request);

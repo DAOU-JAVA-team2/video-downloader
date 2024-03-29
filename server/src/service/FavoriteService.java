@@ -5,6 +5,7 @@ import dto.FavoriteDTO;
 import dto.VideoDTO;
 import network.Request;
 import network.Response;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -58,7 +59,9 @@ public class FavoriteService {
 
             response.put("msg", result != null ? "Success" : "Failed");
             if (result != null){
-                response.put("list", result.toString());
+                Gson gson = new Gson();
+                String jsonList = gson.toJson(result);
+                response.put("list", jsonList);
             }
         }
         catch (Exception e){
