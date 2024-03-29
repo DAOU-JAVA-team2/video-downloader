@@ -1,10 +1,14 @@
 package controller;
 
+import dto.UserDTO;
+import dto.VideoDTO;
 import network.Response;
 
 import javax.swing.*;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static controller.ViewController.*;
@@ -58,6 +62,8 @@ public class RecvController implements Runnable {
                             JOptionPane.showMessageDialog(loginFrame, msg);
                             access = response.get("access");
                             switcher();
+                            System.out.println("리스트요청");
+                            serverService.favoriteGetList(new UserDTO());
                         }
                         else {
                             String msg = "로그인 실패\n에러 : " + response.get("error");
@@ -94,10 +100,12 @@ public class RecvController implements Runnable {
                         break;
                     case "favorite/getList":
                         if (Objects.equals(response.get("msg"), "Success")){
-
+                            List<VideoDTO> video_list = new ArrayList<>();
+                            System.out.println("리스트 확인");
+                            System.out.println(response.get("list"));
                         }
                         else {
-
+                            System.out.println("리스트 확인 실패");
                         }
                         break;
                     case "favorite/add":

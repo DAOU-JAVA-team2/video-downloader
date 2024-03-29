@@ -92,8 +92,10 @@ public class UserService {
     }
 
     public Response userGetId(Request request) throws Exception {
+        System.out.println("gru ui 1");
         UserDTO dto = dbUtil.getUserIdByAccess(request.get("access"));
         Integer result = dto.getUser_id();
+        System.out.println("gru ui 2"+":"+result);
 
         response = new Response();
         response.put("msg", result != null ? "Success" : "Failed");

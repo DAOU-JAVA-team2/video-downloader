@@ -79,7 +79,7 @@ public class ServerService {
         Request request = new Request();
         request.put("select", "favorite/getList");
         // add data
-        request.put("access", dto.getAccess());
+        request.put("access", access);
 //        request.put("userId", String.valueOf(dto.getUser_id()));
         // return
         clientOut.writeObject(request);

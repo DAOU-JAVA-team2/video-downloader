@@ -2,6 +2,7 @@ package service;
 
 import dao.FavoriteDAOImpl;
 import dto.FavoriteDTO;
+import dto.VideoDTO;
 import network.Request;
 import network.Response;
 
@@ -47,15 +48,22 @@ public class FavoriteService {
         return response;
     }
     public Response favoriteGetList(Request request) throws Exception {
-        Response res_userId = userService.userGetId(request);
-        favoriteDTO.setUser_id(Integer.valueOf(res_userId.get("user_id")));
-        List<FavoriteDTO> result = dbUtil.getFavoriteList(favoriteDTO);
-
         response = new Response();
-        response.put("msg", result != null ? "Success" : "Failed");
         response.put("select", "favorite/getList");
-        if (result != null){
-            response.put("list", result.toString());
+
+        try{
+            Response res_userId = userService.userGetId(request);
+            favoriteDTO.setUser_id(Integer.valueOf(res_userId.get("userId")));
+            List<VideoDTO> result = dbUtil.getFavoriteList(favoriteDTO);
+
+            response.put("msg", result != null ? "Success" : "Failed");
+            if (result != null){
+                response.put("list", result.toString());
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            System.out.println("List get Error");
         }
 
         return response;

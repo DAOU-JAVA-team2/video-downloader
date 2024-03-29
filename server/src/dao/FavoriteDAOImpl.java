@@ -2,6 +2,7 @@ package dao;
 
 import db.DatabaseUtil;
 import dto.FavoriteDTO;
+import dto.VideoDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,12 +14,14 @@ public class FavoriteDAOImpl extends DatabaseUtil implements FavoriteDAO {
     PreparedStatement pStmtInsert;
     PreparedStatement pStmtSelect;
     PreparedStatement pStmtDelete;
+    PreparedStatement pStmtSelectVideo;
 
     // constructor
     public FavoriteDAOImpl() throws Exception {
         pStmtInsert = conn.prepareStatement("INSERT into Favorite (user_id , video_id) values (?, ?)");
-        pStmtSelect = conn.prepareStatement("SELECT * from Favorite WHERE userId=?");
-        pStmtDelete = conn.prepareStatement("DELETE FROM Favorite WHERE userId=? and videoId=?");
+        pStmtSelect = conn.prepareStatement("SELECT * from Favorite WHERE user_id=?");
+        pStmtSelectVideo = conn.prepareStatement("SELECT * from Video WHERE video_id=?");
+        pStmtDelete = conn.prepareStatement("DELETE FROM Favorite WHERE user_id=? and video_id=?");
     }
 
     @Override
@@ -49,23 +52,42 @@ public class FavoriteDAOImpl extends DatabaseUtil implements FavoriteDAO {
         }
     }
 
-    @Override
-    public List<FavoriteDTO> getFavoriteList(FavoriteDTO dto) throws SQLException {
-        List<FavoriteDTO> result = new ArrayList<FavoriteDTO>();
+    public List<VideoDTO> getFavoriteList(FavoriteDTO dto) throws SQLException {
+        List<VideoDTO> video_list = new ArrayList<>();
         pStmtSelect.setInt(1, dto.getUser_id());
         try {
             rs = pStmtSelect.executeQuery();
             while(rs.next()) {
                 FavoriteDTO fDto = new FavoriteDTO();
-                fDto.setUser_id(rs.getInt("userId"));
-                fDto.setVideo_id(rs.getInt("videoId"));
-                result.add(fDto);
+                VideoDTO vDto;
+                vDto = getVideoById(rs.getInt("video_id"));
+
+                vDto.setTitle(vDto.getTitle());
+                vDto.setUrl(vDto.getUrl());
+                video_list.add(vDto);
             }
-            return result;
+            return video_list;
         }
         catch(Exception e) {
-            e.getStackTrace();
+            System.out.println("리스트 요청 에러");
+            e.printStackTrace();
             return null;
         }
+    }
+
+    public VideoDTO getVideoById(int videoId) throws SQLException {
+        pStmtSelectVideo.setInt(1, videoId);
+        rs = pStmtSelectVideo.executeQuery();
+        System.out.println(rs);
+
+        VideoDTO dto = new VideoDTO();
+        while (rs.next()){
+            System.out.println(rs.getString("VIDEO_ID"));
+            dto.setVideo_id(videoId);
+            dto.setUrl(rs.getString("URL"));
+            dto.setTitle(rs.getString("TITLE"));
+            break;
+        }
+        return dto;
     }
 }
